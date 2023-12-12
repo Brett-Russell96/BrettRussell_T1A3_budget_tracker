@@ -1,6 +1,6 @@
 from colored import fg, attr, bg
 import json
-import classes
+import components
 
 
 print("Welcome to the Budget Tracker.")
