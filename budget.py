@@ -25,24 +25,25 @@ main_choice = ""
 
 while main_choice != "8":
     main_choice = main_menu()
-    if main_choice == "1":
-        pass
-    elif main_choice == "2":
-        pass
-    elif main_choice == "3":
-        pass
-    elif main_choice == "4":
-        pass
-    elif main_choice == "5":
-        pass
-    elif main_choice == "6":
-        pass
-    elif main_choice == "7":
-        pass
-    elif main_choice == "8":
-        continue
-    else:
-        print("Invalid input, please select a number from 1-8.")
+    match main_choice:
+        case "1":
+            pass
+        case "2":
+            pass
+        case "3":
+            pass
+        case "4":
+            pass
+        case "5":
+            pass
+        case "6":
+            pass
+        case "7":
+            pass
+        case "8":
+            continue
+        case _:
+            print("Invalid input, please select a number from 1-8.")
 
 
 
