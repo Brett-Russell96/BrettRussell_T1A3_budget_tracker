@@ -2,10 +2,48 @@ from colored import fg, attr, bg
 import json
 
 
-
-
 print("Welcome to the Budget Tracker.")
 
+
+class User:
+    def __init__(self, name):
+        self.name = name
+
+    def to_dict(self):
+        return vars(self)
+    
+def load_users(filename):
+    try:
+        with open(filename, "r") as file:
+            data = json.load(file)
+            return {name: (info if isinstance(info, dict) else {}) for name, info in data.items()}
+    except FileNotFoundError:
+        print("Could not find user.")
+        return {}
+    
+def save_users(users,filename):
+    with open(filename, "w") as file:
+        json.dump(users, file, indent=4)
+
+filename = "users.json"
+users_data = load_users(filename)
+
+saved_users = [] 
+
+for name, data in users_data.items():
+    user = User(name)
+    for key, value in data.items():
+        setattr(user, key, value)
+    saved_users.append(user)
+
+if not saved_users:
+    user_name = input("Please enter a name: ")
+    new_user = User(user_name)
+    saved_users.append(new_user)
+    users_data[user_name] = new_user.to_dict()
+    save_users(users_data, filename)
+else:
+    pass
 
 
 def main_menu():
@@ -43,7 +81,7 @@ while main_choice != "8":
         case "8":
             continue
         case _:
-            print("Invalid input, please select a number from 1-8.")
+            print(f"{fg('red')}Invalid input{attr('reset')}, please select a number from 1-8.")
 
 
 
