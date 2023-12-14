@@ -43,5 +43,27 @@ class FlexibleCost:
     def to_dict(self):
         return{"amount": self.amount, "goal amount": self.goal_amount, "occurrence": self.occurrence}
     
+groceries = FlexibleCost(0, 0, "")
+
+fast_food = FlexibleCost(0, 0, "")
+
+eating_out = FlexibleCost(0, 0, "")
+
+fuel = FlexibleCost(0, 0, "")
+
+parking = FlexibleCost(0, 0, "")
+
+tolls = FlexibleCost(0, 0, "")
+
+public_transport = FlexibleCost(0, 0, "")
+
+ride_sharing = FlexibleCost(0, 0, "")
+
+streaming_services = FlexibleCost(0, 0, "")
+
+gym_membership = FlexibleCost(0, 0, "")
+
+subscriptions = FlexibleCost(0, 0, "")
+
 
 
