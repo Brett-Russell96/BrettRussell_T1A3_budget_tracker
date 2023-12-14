@@ -1,6 +1,7 @@
 from colored import fg, attr, bg
+import curses
 import json
-import components
+
 
 
 print("Welcome to the Budget Tracker.")
@@ -46,43 +47,78 @@ if not saved_users:
 else:
     pass
 
+def init_color_pairs():
+    curses.start_color()
+    curses.init_pair(1, curses.COLOR_YELLOW, curses.COLOR_BLACK)
 
-def main_menu():
-    print("1. Add income")
-    print("2. Add expenses")
-    print("3. Calculate average")
-    print("4. Create a budget")
-    print("5. Log an expense")
-    print("6. New user")
-    print("7. Switch user")
-    print("8. Exit application")
-    choice = input("Please select a number from the above menu: ")
-    return choice
+def print_main_menu(win, current_row):
+    win.clear()
 
+    title = "Welcome to the Budget Tracker."
+    win.attron(curses.color_pair(1))
+    win.addstr(1, 5, title)
+    win.attroff(curses.color_pair(1))
+
+    menu = ["Add Income", "Add Expenses", "Calculate Average", "Create a Budget", "Log an Expense", "New User", "Switch User", "Delete User", "Exit Application"]
+    for idx, row in enumerate(menu):
+        x = 5
+        y = 3 + idx * 2
+        if idx == current_row:
+            win.attron(curses.color_pair(2))
+            win.addstr(y, x, row)
+            win.attroff(curses.color_pair(2))
+        else:
+            win.addstr(y, x, row)
+    win.refresh()
+
+def main_menu(stdscr):
+    init_color_pairs()
+    curses.curs_set(0)
+    curses.init_pair(2, curses.COLOR_BLACK, curses.COLOR_WHITE)
+    current_row = 0
+
+    menu = ["Add Income", "Add Expenses", "Calculate Average", "Create a Budget", "Log an Expense", "New User", "Switch User", "Delete User", "Exit Application"]
+
+    print_main_menu(stdscr, current_row)
+
+    while True:
+        key = stdscr.getch()
+
+        if key == curses.KEY_UP and current_row > 0:
+            current_row -= 1
+        elif key == curses.KEY_DOWN and current_row < len(menu) - 1:
+            current_row += 1
+        elif key == curses.KEY_ENTER or key in [10, 13]:
+            break
+
+        print_main_menu(stdscr, current_row)
+    
+    curses.endwin()
+    return current_row
 
 main_choice = ""
 
-while main_choice != "8":
-    main_choice = main_menu()
+while main_choice != 8:
+    main_choice = curses.wrapper(main_menu)
     match main_choice:
-        case "1":
+        case 0:
             pass
-        case "2":
+        case 1:
             pass
-        case "3":
+        case 2:
             pass
-        case "4":
+        case 3:
             pass
-        case "5":
+        case 4:
             pass
-        case "6":
+        case 5:
             pass
-        case "7":
+        case 6:
             pass
-        case "8":
-            continue
-        case _:
-            print(f"{fg('red')}Invalid input{attr('reset')}, please select a number from 1-8.")
+        case 7:
+            pass
+        case 8:
+            break
 
 
 
