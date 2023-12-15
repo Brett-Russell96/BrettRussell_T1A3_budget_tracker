@@ -17,10 +17,6 @@ def create_budget():
     pass
 
 
-def log_expense():
-    pass
-
-
 def new_user():
     pass
 

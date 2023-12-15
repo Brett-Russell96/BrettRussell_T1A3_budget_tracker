@@ -74,7 +74,6 @@ main_menu_options = [
     "Add Expenses",
     "Calculate Average",
     "Create a Budget",
-    "Log an Expense",
     "New User",
     "Switch User",
     "Delete User",
@@ -104,7 +103,23 @@ calculate_average_options = [
 
 create_budget_options = [
     "Create a Budget",
+    "See Savings Goal",
     "Main Menu"
+]
+
+new_user_options = [
+    "Yes",
+    "No"
+]
+
+switch_user_options = [
+    "Yes",
+    "No"
+]
+
+delete_user_options = [
+    "Yes",
+    "NO"
 ]
 
 
@@ -123,7 +138,23 @@ while True:
                 selected_sub_option = display_menu(add_expenses_options, "Select a type of expense:")
                 if selected_sub_option == len(add_expenses_options) - 1:
                     break
-                pass
+        case 2:
+            while True:
+                selected_sub_option = display_menu(calculate_average_options, "How would you like to calculate your finances?")
+                if selected_sub_option == len(calculate_average_options) - 1:
+                    break
+        case 3:
+            while True:
+                selected_sub_option = display_menu(create_budget_options, "What would you like to do?")
+                if selected_sub_option == len(create_budget_options) - 1:
+                    break
+        case 4:
+            
+        
+
+        
+        
+
 
     
         
