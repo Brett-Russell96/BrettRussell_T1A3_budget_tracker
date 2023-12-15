@@ -1,8 +1,9 @@
 import curses
 import json
-import functions
+from functions import add_income
 from colored import fg, bg, attr
 import readchar
+
 
 
 
@@ -45,7 +46,7 @@ if not saved_users:
     users_data[user_name] = new_user.to_dict()
     save_users(users_data, filename)
 else:
-    pass
+    current_user = saved_users[0]
 
 
 def display_menu(options, title = "menu"):
@@ -134,7 +135,9 @@ while True:
         case 0:
             while True:
                 selected_sub_option = display_menu(add_income_options, "Select a type of income:")
-                if selected_sub_option == len(add_income_options) - 1:
+                if selected_sub_option == 0:
+                    continue_adding = add_income(current_user, "primary")
+                elif selected_sub_option == len(add_income_options) - 1:
                     break
         case 1:
             while True:
