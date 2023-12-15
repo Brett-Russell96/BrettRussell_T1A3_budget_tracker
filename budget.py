@@ -4,9 +4,9 @@ import functions
 from colored import fg, bg, attr
 import readchar
 
+
+
 print("Welcome to the Budget Tracker.")
-
-
 class User:
     def __init__(self, name):
         self.name = name
@@ -47,6 +47,7 @@ if not saved_users:
 else:
     pass
 
+
 def display_menu(options, title = "menu"):
     current_selection = 0
 
@@ -68,6 +69,9 @@ def display_menu(options, title = "menu"):
             break
 
     return current_selection
+
+
+
 
 main_menu_options = [
     "Add Income",
@@ -125,7 +129,6 @@ delete_user_options = [
 
 while True:
     selected_option = display_menu(main_menu_options, "Main Menu")
-    print(f"You selected: {main_menu_options[selected_option]}")
 
     match selected_option:
         case 0:
@@ -149,7 +152,21 @@ while True:
                 if selected_sub_option == len(create_budget_options) - 1:
                     break
         case 4:
-            
+            while True:
+                selected_sub_option = display_menu(new_user_options, "Would you like to create a new user?")
+                if selected_sub_option == len(new_user_options) - 1:
+                    break
+        case 5:
+            while True:
+                selected_sub_option = display_menu(switch_user_options, "Would you like to change to another user?")
+                if selected_sub_option == len(switch_user_options) - 1:
+                    break
+        case 6:
+            while True:
+                selected_sub_option = display_menu(delete_user_options, "Would you like to delete this user?")
+                if selected_sub_option == len(delete_user_options) - 1:
+                    break
+
         
 
         
