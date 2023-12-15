@@ -117,6 +117,3 @@ if remaining_income < saving_goal
 
 
 
-        
-
-

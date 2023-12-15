@@ -1,8 +1,8 @@
-from colored import fg, attr, bg
 import curses
 import json
-
-
+import functions
+from colored import fg, bg, attr
+import readchar
 
 print("Welcome to the Budget Tracker.")
 
@@ -47,79 +47,88 @@ if not saved_users:
 else:
     pass
 
-def init_color_pairs():
-    curses.start_color()
-    curses.init_pair(1, curses.COLOR_YELLOW, curses.COLOR_BLACK)
-
-def print_main_menu(win, current_row):
-    win.clear()
-
-    title = "Welcome to the Budget Tracker."
-    win.attron(curses.color_pair(1))
-    win.addstr(1, 5, title)
-    win.attroff(curses.color_pair(1))
-
-    menu = ["Add Income", "Add Expenses", "Calculate Average", "Create a Budget", "Log an Expense", "New User", "Switch User", "Delete User", "Exit Application"]
-    for idx, row in enumerate(menu):
-        x = 5
-        y = 3 + idx * 2
-        if idx == current_row:
-            win.attron(curses.color_pair(2))
-            win.addstr(y, x, row)
-            win.attroff(curses.color_pair(2))
-        else:
-            win.addstr(y, x, row)
-    win.refresh()
-
-def main_menu(stdscr):
-    init_color_pairs()
-    curses.curs_set(0)
-    curses.init_pair(2, curses.COLOR_BLACK, curses.COLOR_WHITE)
-    current_row = 0
-
-    menu = ["Add Income", "Add Expenses", "Calculate Average", "Create a Budget", "Log an Expense", "New User", "Switch User", "Delete User", "Exit Application"]
-
-    print_main_menu(stdscr, current_row)
+def display_menu(options, title = "menu"):
+    current_selection = 0
 
     while True:
-        key = stdscr.getch()
+        print("\033[H\033[J", end = "")
 
-        if key == curses.KEY_UP and current_row > 0:
-            current_row -= 1
-        elif key == curses.KEY_DOWN and current_row < len(menu) - 1:
-            current_row += 1
-        elif key == curses.KEY_ENTER or key in [10, 13]:
+        print(title)
+        for i, option in enumerate(options):
+            prefix = "-> " if i == current_selection else "   "
+            print(f"{prefix}{option}")
+
+        key = readchar.readkey()
+
+        if key == readchar.key.UP and current_selection > 0:
+            current_selection -= 1
+        elif key == readchar.key.DOWN and current_selection < len(options) - 1:
+            current_selection += 1
+        elif key == readchar.key.ENTER:
             break
 
-        print_main_menu(stdscr, current_row)
-    
-    curses.endwin()
-    return current_row
+    return current_selection
 
-main_choice = ""
+main_menu_options = [
+    "Add Income",
+    "Add Expenses",
+    "Calculate Average",
+    "Create a Budget",
+    "Log an Expense",
+    "New User",
+    "Switch User",
+    "Delete User",
+    "Exit Application"
+]
 
-while main_choice != 8:
-    main_choice = curses.wrapper(main_menu)
-    match main_choice:
+add_income_options = [
+    "Add Primary Income",
+    "Add Supplementary Income",
+    "Main Menu"
+]
+
+add_expenses_options = [
+    "Add Home Expense",
+    "Add Food Expense",
+    "Add Travel Expense",
+    "Add Other Expense",
+    "Main Menu"
+]
+
+calculate_average_options = [
+    "Weekly",
+    "Fortnightly",
+    "Monthly",
+    "Main Menu"
+]
+
+create_budget_options = [
+    "Create a Budget",
+    "Main Menu"
+]
+
+
+while True:
+    selected_option = display_menu(main_menu_options, "Main Menu")
+    print(f"You selected: {main_menu_options[selected_option]}")
+
+    match selected_option:
         case 0:
-            pass
+            while True:
+                selected_sub_option = display_menu(add_income_options, "Select a type of income:")
+                if selected_sub_option == len(add_income_options) - 1:
+                    break
         case 1:
-            pass
-        case 2:
-            pass
-        case 3:
-            pass
-        case 4:
-            pass
-        case 5:
-            pass
-        case 6:
-            pass
-        case 7:
-            pass
-        case 8:
-            break
+            while True:
+                selected_sub_option = display_menu(add_expenses_options, "Select a type of expense:")
+                if selected_sub_option == len(add_expenses_options) - 1:
+                    break
+                pass
 
+    
+        
+    if selected_option == len(main_menu_options) -1:
+        break
 
 
 print("Thankyou for using Budget Tracker!")
