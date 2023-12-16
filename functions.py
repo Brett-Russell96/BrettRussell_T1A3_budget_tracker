@@ -1,5 +1,5 @@
 import json 
-from components import Income
+# from components import Income
 
 
 def add_income(user, income_type):

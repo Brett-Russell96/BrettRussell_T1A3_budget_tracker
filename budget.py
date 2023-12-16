@@ -6,74 +6,6 @@ import readchar
 
 
 
-
-print("Welcome to the Budget Tracker.")
-class User:
-    def __init__(self, name):
-        self.name = name
-
-    def to_dict(self):
-        return vars(self)
-    
-def load_users(filename):
-    try:
-        with open(filename, "r") as file:
-            data = json.load(file)
-            return {name: (info if isinstance(info, dict) else {}) for name, info in data.items()}
-    except FileNotFoundError:
-        print("Could not find user.")
-        return {}
-    
-def save_users(users,filename):
-    with open(filename, "w") as file:
-        json.dump(users, file, indent=4)
-
-filename = "users.json"
-users_data = load_users(filename)
-
-saved_users = [] 
-
-for name, data in users_data.items():
-    user = User(name)
-    for key, value in data.items():
-        setattr(user, key, value)
-    saved_users.append(user)
-
-if not saved_users:
-    user_name = input("Please enter a name: ")
-    new_user = User(user_name)
-    saved_users.append(new_user)
-    users_data[user_name] = new_user.to_dict()
-    save_users(users_data, filename)
-else:
-    current_user = saved_users[0]
-
-
-def display_menu(options, title = "menu"):
-    current_selection = 0
-
-    while True:
-        print("\033[H\033[J", end = "")
-
-        print(title)
-        for i, option in enumerate(options):
-            prefix = "-> " if i == current_selection else "   "
-            print(f"{prefix}{option}")
-
-        key = readchar.readkey()
-
-        if key == readchar.key.UP and current_selection > 0:
-            current_selection -= 1
-        elif key == readchar.key.DOWN and current_selection < len(options) - 1:
-            current_selection += 1
-        elif key == readchar.key.ENTER:
-            break
-
-    return current_selection
-
-
-
-
 main_menu_options = [
     "Add Income",
     "Add Expenses",
@@ -127,6 +59,110 @@ delete_user_options = [
     "NO"
 ]
 
+class User:
+    def __init__(self, name):
+        self.name = name
+
+    def to_dict(self):
+        return vars(self)
+    
+
+
+def display_menu(options, title = "menu"):
+    current_selection = 0
+
+    while True:
+        print("\033[H\033[J", end = "")
+
+        print(title)
+        for i, option in enumerate(options):
+            prefix = "-> " if i == current_selection else "   "
+            print(f"{prefix}{option}")
+
+        key = readchar.readkey()
+
+        if key == readchar.key.UP and current_selection > 0:
+            current_selection -= 1
+        elif key == readchar.key.DOWN and current_selection < len(options) - 1:
+            current_selection += 1
+        elif key == readchar.key.ENTER:
+            break
+
+    return current_selection
+
+    
+def load_users(filename):
+    try:
+        with open(filename, "r") as file:
+            data = json.load(file)
+            return {name: (info if isinstance(info, dict) else {}) for name, info in data.items()}
+    except FileNotFoundError:
+        print("Could not find user.")
+        return {}
+    
+def save_users(users,filename):
+    with open(filename, "w") as file:
+        json.dump(users, file, indent=4)
+
+
+filename = "users.json"
+users_data = load_users(filename)
+
+saved_users = [] 
+
+
+def user_selection_menu(saved_users):
+    user_names = [user.name for user in saved_users]
+    user_menu_options = user_names + ["New User"]
+    selected_option = display_menu(user_menu_options, "Select User")
+    return selected_option
+
+def new_user_creation():
+    create_new_user = display_menu(new_user_options, "Would you like to create a new user?")
+    if create_new_user == 0:
+        user_name = input("Please enter a name: ")
+        new_user = User(user_name)
+        return new_user
+    else:
+        return None
+
+
+
+
+print("Welcome to the Budget Tracker.")
+
+
+for name, data in users_data.items():
+    user = User(name)
+    for key, value in data.items():
+        setattr(user, key, value)
+    saved_users.append(user)
+
+
+if not saved_users:
+    user_name = input("Please enter a name: ")
+    new_user = User(user_name)
+    saved_users.append(new_user)
+    users_data[user_name] = new_user.to_dict()
+    save_users(users_data, filename)
+    current_user = new_user
+else:
+    while True:
+        selected_user_index = user_selection_menu(saved_users)
+
+        if selected_user_index < len(saved_users):
+            current_user = saved_users[selected_user_index]
+            break
+        else:
+            new_user = new_user_creation()
+            if new_user:
+                saved_users.append(new_user)
+                users_data[new_user.name] = new_user.to_dict()
+                save_users(users_data, filename)
+                current_user = new_user
+                break
+
+
 
 while True:
     selected_option = display_menu(main_menu_options, "Main Menu")
@@ -170,14 +206,6 @@ while True:
                 if selected_sub_option == len(delete_user_options) - 1:
                     break
 
-        
-
-        
-        
-
-
-    
-        
     if selected_option == len(main_menu_options) -1:
         break
 
