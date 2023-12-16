@@ -1,7 +1,7 @@
 import curses
 import json
-from functions import add_income
-from components import User, Income, primary_income, supplementary_income
+from functions import add_income, display_menu
+from components import User
 from colored import fg, bg, attr
 import readchar
 
@@ -17,13 +17,6 @@ main_menu_options = [
     "Switch User",
     "Delete User",
     "Exit Application"
-]
-
-occurrence_options = [
-    "Weekly",
-    "Fortnightly",
-    "Monthly",
-    "Previous Section"
 ]
 
 add_income_options = [
@@ -76,31 +69,6 @@ saved_users = []
 
 filename = "users.json"
 
-
-
-
-def display_menu(options, title = "menu"):
-    current_selection = 0
-
-    while True:
-        print("\033[H\033[J", end = "")
-
-        print(title)
-        for i, option in enumerate(options):
-            prefix = "-> " if i == current_selection else "   "
-            print(f"{prefix}{option}")
-
-        key = readchar.readkey()
-
-        if key == readchar.key.UP and current_selection > 0:
-            current_selection -= 1
-        elif key == readchar.key.DOWN and current_selection < len(options) - 1:
-            current_selection += 1
-        elif key == readchar.key.ENTER:
-            break
-
-    return current_selection
-
     
 def load_users(filename):
     try:
@@ -134,7 +102,11 @@ def new_user_creation():
         return None
 
 
+def save_user_data(users_data, user, filename):
+    users_data[user.name] = user.to_dict()
 
+    with open(filename, 'w') as file:
+        json.dump(users_data, file, indent=4)
 
 
 
@@ -187,6 +159,7 @@ while True:
                 if selected_sub_option in [0, 1]:
                     income_type = 'primary' if selected_option == 0 else 'supplementary'
                     add_income(current_user, income_type)
+                    save_user_data(users_data, current_user, filename)
                 elif selected_sub_option == 2:
                     pass
                 elif selected_sub_option == 3:

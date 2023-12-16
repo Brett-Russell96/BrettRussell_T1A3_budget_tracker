@@ -1,6 +1,29 @@
 import json 
+import readchar
 from components import Income, primary_income, supplementary_income
-from budget import display_menu, occurrence_options
+from lists import occurrence_options
+
+def display_menu(options, title = "menu"):
+    current_selection = 0
+
+    while True:
+        print("\033[H\033[J", end = "")
+
+        print(title)
+        for i, option in enumerate(options):
+            prefix = "-> " if i == current_selection else "   "
+            print(f"{prefix}{option}")
+
+        key = readchar.readkey()
+
+        if key == readchar.key.UP and current_selection > 0:
+            current_selection -= 1
+        elif key == readchar.key.DOWN and current_selection < len(options) - 1:
+            current_selection += 1
+        elif key == readchar.key.ENTER:
+            break
+
+    return current_selection
 
 def add_income(user, income_type):
 
