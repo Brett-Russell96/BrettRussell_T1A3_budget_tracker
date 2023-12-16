@@ -1,7 +1,7 @@
 import curses
 import json
 from functions import add_income
-from components import User
+from components import User, Income, primary_income, supplementary_income
 from colored import fg, bg, attr
 import readchar
 
@@ -19,9 +19,17 @@ main_menu_options = [
     "Exit Application"
 ]
 
+occurrence_options = [
+    "Weekly",
+    "Fortnightly",
+    "Monthly",
+    "Previous Section"
+]
+
 add_income_options = [
     "Add Primary Income",
     "Add Supplementary Income",
+    "Delete Income",
     "Main Menu"
 ]
 
@@ -30,6 +38,7 @@ add_expenses_options = [
     "Add Food Expense",
     "Add Travel Expense",
     "Add Other Expense",
+    "Delete Expense",
     "Main Menu"
 ]
 
@@ -127,6 +136,9 @@ def new_user_creation():
 
 
 
+
+
+
 users_data = load_users(filename)
 
 print("Welcome to the Budget Tracker.")
@@ -171,14 +183,17 @@ while True:
     match selected_option:
         case 0:
             while True:
-                selected_sub_option = display_menu(add_income_options, "Select a type of income:")
-                if selected_sub_option == 0:
-                    continue_adding = add_income(current_user, "primary")
-                elif selected_sub_option == len(add_income_options) - 1:
+                selected_sub_option = display_menu(add_income_options, "Select an option:")
+                if selected_sub_option in [0, 1]:
+                    income_type = 'primary' if selected_option == 0 else 'supplementary'
+                    add_income(current_user, income_type)
+                elif selected_sub_option == 2:
+                    pass
+                elif selected_sub_option == 3:
                     break
         case 1:
             while True:
-                selected_sub_option = display_menu(add_expenses_options, "Select a type of expense:")
+                selected_sub_option = display_menu(add_expenses_options, "Select an option:")
                 if selected_sub_option == len(add_expenses_options) - 1:
                     break
         case 2:
