@@ -1,3 +1,10 @@
+class User:
+    def __init__(self, name):
+        self.name = name
+
+    def to_dict(self):
+        return vars(self)
+
 class Income:
     def __init__(self, amount = 0, occurrence = ""):
         self.amount = amount
@@ -37,7 +44,8 @@ phone = FixedCost(0, "")
 
 class FlexibleCost:
     def __init__(self, amount = 0, goal_amount = 0, occurrence = ""):
-        super().__init__(amount, occurrence)
+        self.amount = amount
+        self.occurrence = occurrence
         self.goal_amount = goal_amount
     
     def to_dict(self):
@@ -64,6 +72,8 @@ streaming_services = FlexibleCost(0, 0, "")
 gym_membership = FlexibleCost(0, 0, "")
 
 subscriptions = FlexibleCost(0, 0, "")
+
+
 
 
 

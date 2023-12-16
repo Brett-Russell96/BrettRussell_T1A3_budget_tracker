@@ -1,8 +1,10 @@
 import curses
 import json
 from functions import add_income
+from components import User
 from colored import fg, bg, attr
 import readchar
+
 
 
 
@@ -59,13 +61,13 @@ delete_user_options = [
     "NO"
 ]
 
-class User:
-    def __init__(self, name):
-        self.name = name
 
-    def to_dict(self):
-        return vars(self)
-    
+saved_users = [] 
+
+
+filename = "users.json"
+
+
 
 
 def display_menu(options, title = "menu"):
@@ -100,15 +102,10 @@ def load_users(filename):
         print("Could not find user.")
         return {}
     
+   
 def save_users(users,filename):
     with open(filename, "w") as file:
         json.dump(users, file, indent=4)
-
-
-filename = "users.json"
-users_data = load_users(filename)
-
-saved_users = [] 
 
 
 def user_selection_menu(saved_users):
@@ -116,6 +113,7 @@ def user_selection_menu(saved_users):
     user_menu_options = user_names + ["New User"]
     selected_option = display_menu(user_menu_options, "Select User")
     return selected_option
+
 
 def new_user_creation():
     create_new_user = display_menu(new_user_options, "Would you like to create a new user?")
@@ -129,7 +127,10 @@ def new_user_creation():
 
 
 
+users_data = load_users(filename)
+
 print("Welcome to the Budget Tracker.")
+
 
 
 for name, data in users_data.items():
@@ -208,6 +209,7 @@ while True:
 
     if selected_option == len(main_menu_options) -1:
         break
+
 
 
 print("Thankyou for using Budget Tracker!")
