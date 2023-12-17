@@ -2,7 +2,7 @@ class User:
     def __init__(self, name):
         self.name = name
         self.primary_income = {"amount": 0.0, "occurrence": ""}
-        self.supplementary_income = []
+        self.supplementary_income = {"amount": 0.0, "occurrence": ""}
         self.fixed_costs = {
             "rent": {"amount": 0.0, "occurrence": ""},
             "mortgage": {"amount": 0.0, "occurrence": ""},

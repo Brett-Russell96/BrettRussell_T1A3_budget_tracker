@@ -77,6 +77,7 @@ def add_income(user, income_type):
     occurrence = display_menu(occurrence_options, "How often do you receive this income source?")
     if occurrence_options[occurrence] == "Previous Section":
         return
+    
     while True:
         income_value_input = input("Enter the value of the income (press q to return): ")
         if income_value_input.lower() == 'q':
@@ -88,16 +89,15 @@ def add_income(user, income_type):
             print("Invalid input, please use only numbers.")
     
     income_info = {
-        "occurrence": occurrence_options[occurrence],
-        "value": income_value
+        "amount": income_value,
+        "occurrence": occurrence_options[occurrence]
     }
+
     if income_type == 'primary':
         user.primary_income = income_info
-    else:
-        if not hasattr(user, 'supplementary_income'):
-            user.supplementary_income = []
-        user.supplementary_income.append(income_info)
-    pass
+    else: 
+        user.supplementary_income = income_info
+
 
 
 

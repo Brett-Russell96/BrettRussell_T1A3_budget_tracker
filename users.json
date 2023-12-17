@@ -2,10 +2,13 @@
     "Brett": {
         "name": "Brett",
         "primary_income": {
-            "amount": 0.0,
-            "occurrence": ""
+            "amount": 4000.0,
+            "occurrence": "Monthly"
         },
-        "supplementary_income": [],
+        "supplementary_income": {
+            "amount": 600.0,
+            "occurrence": "Fortnightly"
+        },
         "fixed_costs": {
             "rent": {
                 "amount": 0.0,

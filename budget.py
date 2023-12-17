@@ -52,10 +52,10 @@ while True:
             while True:
                 selected_sub_option = display_menu(add_income_options, "Select an option:")
                 if selected_sub_option in [0, 1]:
-                    income_type = 'primary' if selected_option == 0 else 'supplementary'
+                    income_type = 'primary' if selected_sub_option == 0 else 'supplementary'
                     add_income(current_user, income_type)
                     save_user_data(users_data, current_user, filename)
-                    print(f"Debug: Current state of current_user: {current_user.to_dict()}")
+
                 elif selected_sub_option == 2:
                     pass
                 elif selected_sub_option == 3:
