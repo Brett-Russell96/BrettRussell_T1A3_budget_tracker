@@ -1,7 +1,7 @@
 import json 
 import readchar
 from classes import Income, User, primary_income, supplementary_income
-from lists import occurrence_options, new_user_options 
+from lists import occurrence_options, basic_options, home_expense_options, food_expense_options, transport_expense_options, other_expense_options
 
 
 
@@ -55,7 +55,7 @@ def user_selection_menu(saved_users):
 
 
 def new_user_creation():
-    create_new_user = display_menu(new_user_options, "Would you like to create a new user?")
+    create_new_user = display_menu(basic_options, "Would you like to create a new user?")
     if create_new_user == 0:
         user_name = input("Please enter a name: ")
         new_user = User(user_name)
@@ -101,9 +101,31 @@ def add_income(user, income_type):
 
 
 
-def add_expenses():
-    pass
+def add_expenses(user, expense_catagory):
+    while True:
+        match expense_catagory:
+            case 'home':
+                option = display_menu(home_expense_options, "Select an expense:")
+                if option == len(home_expense_options) - 1:
+                    break
+    
+            case 'food':
+                option = display_menu(food_expense_options, "Select an expense")
+                if option == len(food_expense_options) - 1:
+                    break
 
+            case 'transport':
+                option = display_menu(transport_expense_options, "Select an expense")
+                if option == len(transport_expense_options) - 1:
+                    break
+
+            case 'other':
+                option = display_menu(other_expense_options, "Select an expense")
+                if option == len(other_expense_options) - 1:
+                    break
+                
+
+            
 
 def calculate_average():
     pass

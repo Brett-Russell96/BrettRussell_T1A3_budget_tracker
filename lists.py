@@ -1,3 +1,7 @@
+
+
+
+
 occurrence_options = [
     "Weekly",
     "Fortnightly",
@@ -19,18 +23,55 @@ main_menu_options = [
 add_income_options = [
     "Add Primary Income",
     "Add Supplementary Income",
-    "Delete Income",
     "Main Menu"
 ]
+
 
 add_expenses_options = [
     "Add Home Expense",
     "Add Food Expense",
-    "Add Travel Expense",
+    "Add Transport Expense",
     "Add Other Expense",
-    "Delete Expense",
     "Main Menu"
 ]
+
+
+home_expense_options = [
+    "Rent",
+    "Mortgage",
+    "Power",
+    "Gas",
+    "Water",
+    "Internet",
+    "Phone",
+    "Previous Section"
+]
+
+
+food_expense_options = [
+    "Groceries",
+    "Fast Food",
+    "Eating Out",
+    "Previous Section"
+]
+
+
+transport_expense_options = [
+    "Fuel",
+    "Parking",
+    "Public Transport",
+    "Ride Share",
+    "Previous Section"
+]
+
+
+other_expense_options = [
+    "Streaming Services",
+    "Gym Membership",
+    "Subscriptions",
+    "Previous Section"
+]
+
 
 calculate_average_options = [
     "Weekly",
@@ -45,19 +86,10 @@ create_budget_options = [
     "Main Menu"
 ]
 
-new_user_options = [
+basic_options = [
     "Yes",
     "No"
 ]
 
-switch_user_options = [
-    "Yes",
-    "No"
-]
-
-delete_user_options = [
-    "Yes",
-    "NO"
-]
 
 

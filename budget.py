@@ -1,7 +1,7 @@
 import json
-from functions import display_menu, load_users, save_users, user_selection_menu, new_user_creation, save_user_data, add_income 
+from functions import display_menu, load_users, save_users, user_selection_menu, new_user_creation, save_user_data, add_income, add_expenses 
 from classes import User
-from lists import main_menu_options, add_income_options, add_expenses_options, calculate_average_options, create_budget_options, switch_user_options, new_user_options, delete_user_options
+from lists import main_menu_options, add_income_options, add_expenses_options, calculate_average_options, create_budget_options, basic_options
 from colored import fg, bg, attr
 import readchar
 
@@ -44,17 +44,18 @@ else:
 
 
 
-
 while True:
     selected_option = display_menu(main_menu_options, "Main Menu")
-
+    
     match selected_option:
-        case 0:
 
+        case 0:
              while True:
                 current_user_data = users_data[current_user.name]
+                primary_income_amount = current_user_data['primary_income']['amount']
+                supplementary_income_amount = current_user_data['supplementary_income']['amount']
 
-                user_income_info = f" Primary Income: {current_user_data['primary_income']['amount']} ({current_user_data['primary_income']['occurrence']})\n Supplementary Income: {current_user_data['supplementary_income']['amount']} ({current_user_data['supplementary_income']['occurrence']})\n"
+                user_income_info = f" Primary Income: {primary_income_amount} ({current_user_data['primary_income']['occurrence']})\n Supplementary Income: {supplementary_income_amount} ({current_user_data['supplementary_income']['occurrence']})\n"
 
                 add_income_prompt = f"{user_income_info}\n Select an option:"
 
@@ -63,15 +64,28 @@ while True:
                     income_type = 'primary' if selected_sub_option == 0 else 'supplementary'
                     add_income(current_user, income_type)
                     save_user_data(users_data, current_user, filename)
-                elif selected_sub_option == 2:
-                    pass
                 else: 
                     break
+
         case 1:
             while True:
                 selected_sub_option = display_menu(add_expenses_options, "Select an option:")
-                if selected_sub_option == len(add_expenses_options) - 1:
-                    break
+                match selected_sub_option:
+                    case 0:
+                        add_expenses(user, 'home')
+                        break
+                    case 1:
+                        add_expenses(user, 'food')
+                        break
+                    case 2:
+                        add_expenses(user, 'transport')
+                        break
+                    case 3:
+                        add_expenses(user, 'other')
+                        break
+                    case 4:
+                        break
+                    
         case 2:
             while True:
                 selected_sub_option = display_menu(calculate_average_options, "How would you like to calculate your finances?")
@@ -84,18 +98,18 @@ while True:
                     break
         case 4:
             while True:
-                selected_sub_option = display_menu(new_user_options, "Would you like to create a new user?")
-                if selected_sub_option == len(new_user_options) - 1:
+                selected_sub_option = display_menu(basic_options, "Would you like to create a new user?")
+                if selected_sub_option == len(basic_options) - 1:
                     break
         case 5:
             while True:
-                selected_sub_option = display_menu(switch_user_options, "Would you like to change to another user?")
-                if selected_sub_option == len(switch_user_options) - 1:
+                selected_sub_option = display_menu(basic_options, "Would you like to change to another user?")
+                if selected_sub_option == len(basic_options) - 1:
                     break
         case 6:
             while True:
-                selected_sub_option = display_menu(delete_user_options, "Would you like to delete this user?")
-                if selected_sub_option == len(delete_user_options) - 1:
+                selected_sub_option = display_menu(basic_options, "Would you like to delete this user?")
+                if selected_sub_option == len(basic_options) - 1:
                     break
 
     if selected_option == len(main_menu_options) -1:
