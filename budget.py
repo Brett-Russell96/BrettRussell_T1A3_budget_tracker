@@ -55,6 +55,7 @@ while True:
                     income_type = 'primary' if selected_option == 0 else 'supplementary'
                     add_income(current_user, income_type)
                     save_user_data(users_data, current_user, filename)
+                    print(f"Debug: Current state of current_user: {current_user.to_dict()}")
                 elif selected_sub_option == 2:
                     pass
                 elif selected_sub_option == 3:

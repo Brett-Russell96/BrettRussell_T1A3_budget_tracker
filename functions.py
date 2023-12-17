@@ -67,7 +67,6 @@ def new_user_creation():
 
 def save_user_data(users_data, user, filename):
     users_data[user.name] = user.to_dict()
-
     with open(filename, 'w') as file:
         json.dump(users_data, file, indent=4)
 
@@ -99,6 +98,7 @@ def add_income(user, income_type):
             user.supplementary_income = []
         user.supplementary_income.append(income_info)
     pass
+
 
 
 def add_expenses():

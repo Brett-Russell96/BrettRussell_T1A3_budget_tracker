@@ -2,8 +2,91 @@
     "Brett": {
         "name": "Brett",
         "primary_income": {
-            "occurrence": "Weekly",
-            "value": 1300.0
+            "amount": 0.0,
+            "occurrence": ""
+        },
+        "supplementary_income": [],
+        "fixed_costs": {
+            "rent": {
+                "amount": 0.0,
+                "occurrence": ""
+            },
+            "mortgage": {
+                "amount": 0.0,
+                "occurrence": ""
+            },
+            "power": {
+                "amount": 0.0,
+                "occurrence": ""
+            },
+            "gas": {
+                "amount": 0.0,
+                "occurrence": ""
+            },
+            "water": {
+                "amount": 0.0,
+                "occurrence": ""
+            },
+            "internet": {
+                "amount": 0.0,
+                "occurrence": ""
+            },
+            "phone": {
+                "amount": 0.0,
+                "occurrence": ""
+            }
+        },
+        "flexible_costs": {
+            "groceries": {
+                "amount": 0.0,
+                "goal_amount": 0.0,
+                "occurrence": ""
+            },
+            "fast_food": {
+                "amount": 0.0,
+                "goal_amount": 0.0,
+                "occurrence": ""
+            },
+            "eating_out": {
+                "amount": 0.0,
+                "goal_amount": 0.0,
+                "occurrence": ""
+            },
+            "fuel": {
+                "amount": 0.0,
+                "goal_amount": 0.0,
+                "occurrence": ""
+            },
+            "parking": {
+                "amount": 0.0,
+                "goal_amount": 0.0,
+                "occurrence": ""
+            },
+            "public_transport": {
+                "amount": 0.0,
+                "goal_amount": 0.0,
+                "occurrence": ""
+            },
+            "ride_sharing": {
+                "amount": 0.0,
+                "goal_amount": 0.0,
+                "occurrence": ""
+            },
+            "streaming_services": {
+                "amount": 0.0,
+                "goal_amount": 0.0,
+                "occurrence": ""
+            },
+            "gym_membership": {
+                "amount": 0.0,
+                "goal_amount": 0.0,
+                "occurrence": ""
+            },
+            "subscriptions": {
+                "amount": 0.0,
+                "goal_amount": 0.0,
+                "occurrence": ""
+            }
         }
     }
 }

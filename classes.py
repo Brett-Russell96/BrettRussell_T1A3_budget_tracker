@@ -1,6 +1,29 @@
 class User:
     def __init__(self, name):
         self.name = name
+        self.primary_income = {"amount": 0.0, "occurrence": ""}
+        self.supplementary_income = []
+        self.fixed_costs = {
+            "rent": {"amount": 0.0, "occurrence": ""},
+            "mortgage": {"amount": 0.0, "occurrence": ""},
+            "power": {"amount": 0.0, "occurrence": ""},
+            "gas": {"amount": 0.0, "occurrence": ""},
+            "water": {"amount": 0.0, "occurrence": ""},
+            "internet": {"amount": 0.0, "occurrence": ""},
+            "phone": {"amount": 0.0, "occurrence": ""}
+        }
+        self.flexible_costs = {
+            "groceries": {"amount": 0.0, "goal_amount": 0.0, "occurrence": ""},
+            "fast_food": {"amount": 0.0, "goal_amount": 0.0, "occurrence": ""},
+            "eating_out": {"amount": 0.0, "goal_amount": 0.0, "occurrence": ""},
+            "fuel": {"amount": 0.0, "goal_amount": 0.0, "occurrence": ""},
+            "parking": {"amount": 0.0, "goal_amount": 0.0, "occurrence": ""},
+            "public_transport": {"amount": 0.0, "goal_amount": 0.0, "occurrence": ""},
+            "ride_sharing": {"amount": 0.0, "goal_amount": 0.0, "occurrence": ""},
+            "streaming_services": {"amount": 0.0, "goal_amount": 0.0, "occurrence": ""},
+            "gym_membership": {"amount": 0.0, "goal_amount": 0.0, "occurrence": ""},
+            "subscriptions": {"amount": 0.0, "goal_amount": 0.0, "occurrence": ""},
+        }
 
     def to_dict(self):
         return vars(self)
@@ -64,8 +87,6 @@ eating_out = FlexibleCost(0, 0, "")
 fuel = FlexibleCost(0, 0, "")
 
 parking = FlexibleCost(0, 0, "")
-
-tolls = FlexibleCost(0, 0, "")
 
 public_transport = FlexibleCost(0, 0, "")
 
