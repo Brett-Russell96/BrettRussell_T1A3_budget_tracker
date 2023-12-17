@@ -44,21 +44,28 @@ else:
 
 
 
+
 while True:
     selected_option = display_menu(main_menu_options, "Main Menu")
 
     match selected_option:
         case 0:
-            while True:
-                selected_sub_option = display_menu(add_income_options, "Select an option:")
+
+             while True:
+                current_user_data = users_data[current_user.name]
+
+                user_income_info = f" Primary Income: {current_user_data['primary_income']['amount']} ({current_user_data['primary_income']['occurrence']})\n Supplementary Income: {current_user_data['supplementary_income']['amount']} ({current_user_data['supplementary_income']['occurrence']})\n"
+
+                add_income_prompt = f"{user_income_info}\n Select an option:"
+
+                selected_sub_option = display_menu(add_income_options, add_income_prompt)
                 if selected_sub_option in [0, 1]:
                     income_type = 'primary' if selected_sub_option == 0 else 'supplementary'
                     add_income(current_user, income_type)
                     save_user_data(users_data, current_user, filename)
-
                 elif selected_sub_option == 2:
                     pass
-                elif selected_sub_option == 3:
+                else: 
                     break
         case 1:
             while True:

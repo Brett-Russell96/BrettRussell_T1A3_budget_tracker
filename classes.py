@@ -13,16 +13,22 @@ class User:
             "phone": {"amount": 0.0, "occurrence": ""}
         }
         self.flexible_costs = {
-            "groceries": {"amount": 0.0, "goal_amount": 0.0, "occurrence": ""},
-            "fast_food": {"amount": 0.0, "goal_amount": 0.0, "occurrence": ""},
-            "eating_out": {"amount": 0.0, "goal_amount": 0.0, "occurrence": ""},
-            "fuel": {"amount": 0.0, "goal_amount": 0.0, "occurrence": ""},
-            "parking": {"amount": 0.0, "goal_amount": 0.0, "occurrence": ""},
-            "public_transport": {"amount": 0.0, "goal_amount": 0.0, "occurrence": ""},
-            "ride_sharing": {"amount": 0.0, "goal_amount": 0.0, "occurrence": ""},
-            "streaming_services": {"amount": 0.0, "goal_amount": 0.0, "occurrence": ""},
-            "gym_membership": {"amount": 0.0, "goal_amount": 0.0, "occurrence": ""},
-            "subscriptions": {"amount": 0.0, "goal_amount": 0.0, "occurrence": ""},
+            "food": {
+                "groceries": {"amount": 0.0, "goal_amount": 0.0, "occurrence": ""},
+                "fast_food": {"amount": 0.0, "goal_amount": 0.0, "occurrence": ""},
+                "eating_out": {"amount": 0.0, "goal_amount": 0.0, "occurrence": ""}
+            },
+            "transport": {
+                "fuel": {"amount": 0.0, "goal_amount": 0.0, "occurrence": ""},
+                "parking": {"amount": 0.0, "goal_amount": 0.0, "occurrence": ""},
+                "public_transport": {"amount": 0.0, "goal_amount": 0.0, "occurrence": ""},
+                "ride_sharing": {"amount": 0.0, "goal_amount": 0.0, "occurrence": ""}
+            },
+            "other": {
+                "streaming_services": {"amount": 0.0, "goal_amount": 0.0, "occurrence": ""},
+                "gym_membership": {"amount": 0.0, "goal_amount": 0.0, "occurrence": ""},
+                "subscriptions": {"amount": 0.0, "goal_amount": 0.0, "occurrence": ""}
+            }
         }
 
     def to_dict(self):

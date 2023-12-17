@@ -2,12 +2,12 @@
     "Brett": {
         "name": "Brett",
         "primary_income": {
-            "amount": 4000.0,
-            "occurrence": "Monthly"
+            "amount": 3000.0,
+            "occurrence": "Fortnightly"
         },
         "supplementary_income": {
             "amount": 600.0,
-            "occurrence": "Fortnightly"
+            "occurrence": "Monthly"
         },
         "fixed_costs": {
             "rent": {
@@ -40,55 +40,61 @@
             }
         },
         "flexible_costs": {
-            "groceries": {
-                "amount": 0.0,
-                "goal_amount": 0.0,
-                "occurrence": ""
+            "food": {
+                "groceries": {
+                    "amount": 0.0,
+                    "goal_amount": 0.0,
+                    "occurrence": ""
+                },
+                "fast_food": {
+                    "amount": 0.0,
+                    "goal_amount": 0.0,
+                    "occurrence": ""
+                },
+                "eating_out": {
+                    "amount": 0.0,
+                    "goal_amount": 0.0,
+                    "occurrence": ""
+                }
             },
-            "fast_food": {
-                "amount": 0.0,
-                "goal_amount": 0.0,
-                "occurrence": ""
+            "transport": {
+                "fuel": {
+                    "amount": 0.0,
+                    "goal_amount": 0.0,
+                    "occurrence": ""
+                },
+                "parking": {
+                    "amount": 0.0,
+                    "goal_amount": 0.0,
+                    "occurrence": ""
+                },
+                "public_transport": {
+                    "amount": 0.0,
+                    "goal_amount": 0.0,
+                    "occurrence": ""
+                },
+                "ride_sharing": {
+                    "amount": 0.0,
+                    "goal_amount": 0.0,
+                    "occurrence": ""
+                }
             },
-            "eating_out": {
-                "amount": 0.0,
-                "goal_amount": 0.0,
-                "occurrence": ""
-            },
-            "fuel": {
-                "amount": 0.0,
-                "goal_amount": 0.0,
-                "occurrence": ""
-            },
-            "parking": {
-                "amount": 0.0,
-                "goal_amount": 0.0,
-                "occurrence": ""
-            },
-            "public_transport": {
-                "amount": 0.0,
-                "goal_amount": 0.0,
-                "occurrence": ""
-            },
-            "ride_sharing": {
-                "amount": 0.0,
-                "goal_amount": 0.0,
-                "occurrence": ""
-            },
-            "streaming_services": {
-                "amount": 0.0,
-                "goal_amount": 0.0,
-                "occurrence": ""
-            },
-            "gym_membership": {
-                "amount": 0.0,
-                "goal_amount": 0.0,
-                "occurrence": ""
-            },
-            "subscriptions": {
-                "amount": 0.0,
-                "goal_amount": 0.0,
-                "occurrence": ""
+            "other": {
+                "streaming_services": {
+                    "amount": 0.0,
+                    "goal_amount": 0.0,
+                    "occurrence": ""
+                },
+                "gym_membership": {
+                    "amount": 0.0,
+                    "goal_amount": 0.0,
+                    "occurrence": ""
+                },
+                "subscriptions": {
+                    "amount": 0.0,
+                    "goal_amount": 0.0,
+                    "occurrence": ""
+                }
             }
         }
     }
