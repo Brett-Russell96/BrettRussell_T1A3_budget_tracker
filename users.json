@@ -2,8 +2,8 @@
     "Brett": {
         "name": "Brett",
         "primary_income": {
-            "occurrence": "Fortnightly",
-            "value": 2600.0
+            "occurrence": "Weekly",
+            "value": 1300.0
         }
     }
 }

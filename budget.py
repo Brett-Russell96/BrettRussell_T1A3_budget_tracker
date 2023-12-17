@@ -1,120 +1,15 @@
-import curses
 import json
-from functions import add_income, display_menu
-from components import User
+from functions import display_menu, load_users, save_users, user_selection_menu, new_user_creation, save_user_data, add_income 
+from classes import User
+from lists import main_menu_options, add_income_options, add_expenses_options, calculate_average_options, create_budget_options, switch_user_options, new_user_options, delete_user_options
 from colored import fg, bg, attr
 import readchar
 
 
 
-
-main_menu_options = [
-    "Add Income",
-    "Add Expenses",
-    "Calculate Average",
-    "Create a Budget",
-    "New User",
-    "Switch User",
-    "Delete User",
-    "Exit Application"
-]
-
-add_income_options = [
-    "Add Primary Income",
-    "Add Supplementary Income",
-    "Delete Income",
-    "Main Menu"
-]
-
-add_expenses_options = [
-    "Add Home Expense",
-    "Add Food Expense",
-    "Add Travel Expense",
-    "Add Other Expense",
-    "Delete Expense",
-    "Main Menu"
-]
-
-calculate_average_options = [
-    "Weekly",
-    "Fortnightly",
-    "Monthly",
-    "Main Menu"
-]
-
-create_budget_options = [
-    "Create a Budget",
-    "See Savings Goal",
-    "Main Menu"
-]
-
-new_user_options = [
-    "Yes",
-    "No"
-]
-
-switch_user_options = [
-    "Yes",
-    "No"
-]
-
-delete_user_options = [
-    "Yes",
-    "NO"
-]
-
-
 saved_users = [] 
-
-
-filename = "users.json"
-
-    
-def load_users(filename):
-    try:
-        with open(filename, "r") as file:
-            data = json.load(file)
-            return {name: (info if isinstance(info, dict) else {}) for name, info in data.items()}
-    except FileNotFoundError:
-        print("Could not find user.")
-        return {}
-    
-   
-def save_users(users,filename):
-    with open(filename, "w") as file:
-        json.dump(users, file, indent=4)
-
-
-def user_selection_menu(saved_users):
-    user_names = [user.name for user in saved_users]
-    user_menu_options = user_names + ["New User"]
-    selected_option = display_menu(user_menu_options, "Select User")
-    return selected_option
-
-
-def new_user_creation():
-    create_new_user = display_menu(new_user_options, "Would you like to create a new user?")
-    if create_new_user == 0:
-        user_name = input("Please enter a name: ")
-        new_user = User(user_name)
-        return new_user
-    else:
-        return None
-
-
-def save_user_data(users_data, user, filename):
-    users_data[user.name] = user.to_dict()
-
-    with open(filename, 'w') as file:
-        json.dump(users_data, file, indent=4)
-
-
-
-
+filename = "users.json"   
 users_data = load_users(filename)
-
-print("Welcome to the Budget Tracker.")
-
 
 
 for name, data in users_data.items():

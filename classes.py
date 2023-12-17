@@ -5,6 +5,8 @@ class User:
     def to_dict(self):
         return vars(self)
 
+
+
 class Income:
     def __init__(self, amount = 0, occurrence = ""):
         self.amount = amount
@@ -17,6 +19,8 @@ class Income:
 primary_income = Income(0, "")
 
 supplementary_income = Income(0, "")
+
+
 
 class FixedCost:
     def __init__(self, amount = 0, occurrence = ""):

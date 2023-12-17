@@ -1,7 +1,9 @@
 import json 
 import readchar
-from components import Income, primary_income, supplementary_income
-from lists import occurrence_options
+from classes import Income, User, primary_income, supplementary_income
+from lists import occurrence_options, new_user_options 
+
+
 
 def display_menu(options, title = "menu"):
     current_selection = 0
@@ -24,6 +26,52 @@ def display_menu(options, title = "menu"):
             break
 
     return current_selection
+
+
+
+def load_users(filename):
+    try:
+        with open(filename, "r") as file:
+            data = json.load(file)
+            return {name: (info if isinstance(info, dict) else {}) for name, info in data.items()}
+    except FileNotFoundError:
+        print("Welcome to the Budget Tracker!")
+        return {}
+    
+
+
+def save_users(users,filename):
+    with open(filename, "w") as file:
+        json.dump(users, file, indent=4)
+
+
+
+def user_selection_menu(saved_users):
+    user_names = [user.name for user in saved_users]
+    user_menu_options = user_names + ["New User"]
+    selected_option = display_menu(user_menu_options, "Select User")
+    return selected_option
+
+
+
+def new_user_creation():
+    create_new_user = display_menu(new_user_options, "Would you like to create a new user?")
+    if create_new_user == 0:
+        user_name = input("Please enter a name: ")
+        new_user = User(user_name)
+        return new_user
+    else:
+        return None
+
+
+
+def save_user_data(users_data, user, filename):
+    users_data[user.name] = user.to_dict()
+
+    with open(filename, 'w') as file:
+        json.dump(users_data, file, indent=4)
+
+
 
 def add_income(user, income_type):
 
@@ -51,6 +99,7 @@ def add_income(user, income_type):
             user.supplementary_income = []
         user.supplementary_income.append(income_info)
     pass
+
 
 def add_expenses():
     pass
