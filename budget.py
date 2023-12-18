@@ -1,15 +1,11 @@
 import json
-from functions import display_menu, load_users, save_users, user_selection_menu, new_user_creation, save_user_data, add_income, add_expenses 
+from functions import display_menu, load_users, save_users, user_selection_menu, new_user_creation, save_user_data, add_income, add_expenses, saved_users, users_data, filename
 from classes import User
 from lists import main_menu_options, add_income_options, add_expenses_options, calculate_average_options, create_budget_options, basic_options
 from colored import fg, bg, attr
 import readchar
 
 
-
-saved_users = [] 
-filename = "users.json"   
-users_data = load_users(filename)
 
 
 for name, data in users_data.items():
@@ -54,9 +50,7 @@ while True:
                 current_user_data = users_data[current_user.name]
                 primary_income_amount = current_user_data['primary_income']['amount']
                 supplementary_income_amount = current_user_data['supplementary_income']['amount']
-
                 user_income_info = f" Primary Income: {primary_income_amount} ({current_user_data['primary_income']['occurrence']})\n Supplementary Income: {supplementary_income_amount} ({current_user_data['supplementary_income']['occurrence']})\n"
-
                 add_income_prompt = f"{user_income_info}\n Select an option:"
 
                 selected_sub_option = display_menu(add_income_options, add_income_prompt)
@@ -72,13 +66,13 @@ while True:
                 selected_sub_option = display_menu(add_expenses_options, "Select an option:")
                 match selected_sub_option:
                     case 0:
-                        add_expenses(user, 'home')
+                        add_expenses(current_user, "home")
                     case 1:
-                        add_expenses(user, 'food')
+                        add_expenses(current_user, "food")                     
                     case 2:
-                        add_expenses(user, 'transport')
+                        add_expenses(current_user, "transport")                       
                     case 3:
-                        add_expenses(user, 'other')
+                        add_expenses(current_user, "other")                        
                     case 4:
                         break
                     

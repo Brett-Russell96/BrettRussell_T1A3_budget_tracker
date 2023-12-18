@@ -3,31 +3,31 @@ class User:
         self.name = name
         self.primary_income = {"amount": 0.0, "occurrence": ""}
         self.supplementary_income = {"amount": 0.0, "occurrence": ""}
-        self.costs = {
+        self.expense = {
             "home": {
-                "rent": {"amount": 0.0, "occurrence": ""},
-                "mortgage": {"amount": 0.0, "occurrence": ""},
-                "power": {"amount": 0.0, "occurrence": ""},
-                "gas": {"amount": 0.0, "occurrence": ""},
-                "water": {"amount": 0.0, "occurrence": ""},
-                "internet": {"amount": 0.0, "occurrence": ""},
-                "phone": {"amount": 0.0, "occurrence": ""}
+                "Rent": {"amount": 0.0, "occurrence": ""},
+                "Mortgage": {"amount": 0.0, "occurrence": ""},
+                "Power": {"amount": 0.0, "occurrence": ""},
+                "Gas": {"amount": 0.0, "occurrence": ""},
+                "Water": {"amount": 0.0, "occurrence": ""},
+                "Internet": {"amount": 0.0, "occurrence": ""},
+                "Phone": {"amount": 0.0, "occurrence": ""}
             },
             "food": {
-                "groceries": {"amount": 0.0, "goal_amount": 0.0, "occurrence": ""},
-                "fast_food": {"amount": 0.0, "goal_amount": 0.0, "occurrence": ""},
-                "eating_out": {"amount": 0.0, "goal_amount": 0.0, "occurrence": ""}
+                "Groceries": {"amount": 0.0, "goal_amount": 0.0, "occurrence": ""},
+                "Fast Food": {"amount": 0.0, "goal_amount": 0.0, "occurrence": ""},
+                "Eating Out": {"amount": 0.0, "goal_amount": 0.0, "occurrence": ""}
             },
             "transport": {
-                "fuel": {"amount": 0.0, "goal_amount": 0.0, "occurrence": ""},
-                "parking": {"amount": 0.0, "goal_amount": 0.0, "occurrence": ""},
-                "public_transport": {"amount": 0.0, "goal_amount": 0.0, "occurrence": ""},
-                "ride_sharing": {"amount": 0.0, "goal_amount": 0.0, "occurrence": ""}
+                "Fuel": {"amount": 0.0, "goal_amount": 0.0, "occurrence": ""},
+                "Parking": {"amount": 0.0, "goal_amount": 0.0, "occurrence": ""},
+                "Public Transport": {"amount": 0.0, "goal_amount": 0.0, "occurrence": ""},
+                "Ride Share": {"amount": 0.0, "goal_amount": 0.0, "occurrence": ""}
             },
             "other": {
-                "streaming_services": {"amount": 0.0, "goal_amount": 0.0, "occurrence": ""},
-                "gym_membership": {"amount": 0.0, "goal_amount": 0.0, "occurrence": ""},
-                "subscriptions": {"amount": 0.0, "goal_amount": 0.0, "occurrence": ""}
+                "Streaming Services": {"amount": 0.0, "goal_amount": 0.0, "occurrence": ""},
+                "Gym Membership": {"amount": 0.0, "goal_amount": 0.0, "occurrence": ""},
+                "Subscriptions": {"amount": 0.0, "goal_amount": 0.0, "occurrence": ""}
             }
         }
 
@@ -51,7 +51,7 @@ supplementary_income = Income(0, "")
 
 
 
-class Cost:
+class Expense:
     def __init__(self, amount = 0, goal_amount = 0, occurrence = ""):
         self.amount = amount
         self.occurrence = occurrence
@@ -59,39 +59,39 @@ class Cost:
     
     def to_dict(self):
         return{"amount": self.amount, "goal amount": self.goal_amount, "occurrence": self.occurrence}
-rent = Cost(0, 0, "")
+rent = Expense(0, 0, "")
 
-mortgage = Cost(0, 0, "")
+mortgage = Expense(0, 0, "")
 
-power = Cost(0, 0, "")
+power = Expense(0, 0, "")
 
-gas = Cost(0, 0, "")
+gas = Expense(0, 0, "")
 
-water = Cost(0, 0, "")
+water = Expense(0, 0, "")
 
-internet = Cost(0, 0, "")
+internet = Expense(0, 0, "")
 
-phone = Cost(0, 0, "")
+phone = Expense(0, 0, "")
    
-groceries = Cost(0, 0, "")
+groceries = Expense(0, 0, "")
 
-fast_food = Cost(0, 0, "")
+fast_food = Expense(0, 0, "")
 
-eating_out = Cost(0, 0, "")
+eating_out = Expense(0, 0, "")
 
-fuel = Cost(0, 0, "")
+fuel = Expense(0, 0, "")
 
-parking = Cost(0, 0, "")
+parking = Expense(0, 0, "")
 
-public_transport = Cost(0, 0, "")
+public_transport = Expense(0, 0, "")
 
-ride_sharing = Cost(0, 0, "")
+ride_sharing = Expense(0, 0, "")
 
-streaming_services = Cost(0, 0, "")
+streaming_services = Expense(0, 0, "")
 
-gym_membership = Cost(0, 0, "")
+gym_membership = Expense(0, 0, "")
 
-subscriptions = Cost(0, 0, "")
+subscriptions = Expense(0, 0, "")
 
 
 

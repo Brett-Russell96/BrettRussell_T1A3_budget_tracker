@@ -4,6 +4,9 @@ from classes import Income, User, primary_income, supplementary_income
 from lists import occurrence_options, basic_options, home_expense_options, food_expense_options, transport_expense_options, other_expense_options
 
 
+saved_users = [] 
+filename = "users.json"   
+
 
 def display_menu(options, title = "menu"):
     current_selection = 0
@@ -37,7 +40,8 @@ def load_users(filename):
     except FileNotFoundError:
         print("Welcome to the Budget Tracker!")
         return {}
-    
+users_data = load_users(filename)
+
 
 
 def save_users(users,filename):
@@ -101,30 +105,42 @@ def add_income(user, income_type):
 
 
 
-def add_expenses(user, expense_catagory):
+def add_expenses(user, expense_category):
     while True:
-        match expense_catagory:
-            case 'home':
-                option = display_menu(home_expense_options, "Select an expense:")
-                if option == len(home_expense_options) - 1:
-                    break
-    
-            case 'food':
-                option = display_menu(food_expense_options, "Select an expense")
-                if option == len(food_expense_options) - 1:
-                    break
+        match expense_category:
+            case "home":
+                options = home_expense_options
+            case "food":
+                options = food_expense_options
+            case "transport":
+                options = transport_expense_options
+            case "other":
+                options = other_expense_options
 
-            case 'transport':
-                option = display_menu(transport_expense_options, "Select an expense")
-                if option == len(transport_expense_options) - 1:
+        option = display_menu(options, "Select an expense:")        
+        if option == len(options) - 1:
                     break
+        
+        expense_name = options[option]
 
-            case 'other':
-                option = display_menu(other_expense_options, "Select an expense")
-                if option == len(other_expense_options) - 1:
-                    break
-                
-
+        occurrence = display_menu(occurrence_options, "How frequent is this expense?")
+        if occurrence_options[occurrence] == "Previous Section":
+            return
+        
+        while True:
+            expense_value_input = input("Enter the value of the expense (press 'q' to return): ")
+            if expense_value_input.lower() == 'q':
+                return
+            try:
+                expense_value = float(expense_value_input)
+                user.expense[expense_category][expense_name] = {
+                    "amount": expense_value,
+                    "occurrence": occurrence_options[occurrence]
+                }
+                save_user_data(users_data, user, filename)
+                break
+            except ValueError:
+                print("Invalid input, please use only numbers.")
             
 
 def calculate_average():
