@@ -77,6 +77,7 @@ def save_user_data(users_data, user, filename):
 
 
 def add_income(user, income_type):
+    
 
     occurrence = display_menu(occurrence_options, "How often do you receive this income source?")
     if occurrence_options[occurrence] == "Previous Section":
@@ -88,19 +89,21 @@ def add_income(user, income_type):
             return
         try:
             income_value = float(income_value_input)
+            income_info = {
+                "amount": income_value,
+                "occurrence": occurrence_options[occurrence]
+            }
+
+            if income_type == 'primary':
+                user.primary_income = income_info
+            else: 
+                user.supplementary_income = income_info
+            save_user_data(users_data, user, filename)
             break
         except ValueError:
             print("Invalid input, please use only numbers.")
     
-    income_info = {
-        "amount": income_value,
-        "occurrence": occurrence_options[occurrence]
-    }
 
-    if income_type == 'primary':
-        user.primary_income = income_info
-    else: 
-        user.supplementary_income = income_info
 
 
 

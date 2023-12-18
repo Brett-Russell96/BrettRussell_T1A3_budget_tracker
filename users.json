@@ -3,10 +3,10 @@
         "name": "Brett",
         "primary_income": {
             "amount": 2600.0,
-            "occurrence": "Fortnightly"
+            "occurrence": "Monthly"
         },
         "supplementary_income": {
-            "amount": 500.0,
+            "amount": 1000.0,
             "occurrence": "Monthly"
         },
         "expense": {

@@ -42,16 +42,51 @@ else:
 
 while True:
     selected_option = display_menu(main_menu_options, "Main Menu")
-    
+
+    current_user_data = users_data[current_user.name]
+
+    primary_income_info = f"{current_user_data['primary_income']['amount']} ({current_user_data['primary_income']['occurrence']})"
+    supplementary_income_info = f"{current_user_data['supplementary_income']['amount']} ({current_user_data['supplementary_income']['occurrence']})"
+
+    user_income_info = f"Primary Income:\n     {primary_income_info}\n Supplementary Income:\n     {supplementary_income_info}"
+
+    home_expense_info = ""
+    for expense_type, details in current_user_data['expense']['home'].items():
+        amount = details['amount']
+        occurrence = details['occurrence']
+        home_expense_info += f"{expense_type}: {amount} ({occurrence})\n     "
+    home_expense_info = home_expense_info.rstrip()
+
+    food_expense_info = ""
+    for expense_type, details in current_user_data['expense']['food'].items():
+        amount = details['amount']
+        occurrence = details['occurrence']
+        food_expense_info += f"{expense_type}: {amount} ({occurrence})\n     "
+    food_expense_info = food_expense_info.rstrip()
+
+    transport_expense_info = ""
+    for expense_type, details in current_user_data['expense']['transport'].items():
+        amount = details['amount']
+        occurrence = details['occurrence']
+        transport_expense_info += f"{expense_type}: {amount} ({occurrence})\n     "
+    transport_expense_info = transport_expense_info.rstrip()
+
+    other_expense_info = ""
+    for expense_type, details in current_user_data['expense']['other'].items():
+        amount = details['amount']
+        occurrence = details['occurrence']
+        other_expense_info += f"{expense_type}: {amount} ({occurrence})\n     "
+    other_expense_info = other_expense_info.rstrip()
+
+    user_expense_info = f"Home Expenses:\n     {home_expense_info}\n Food Expenses: {food_expense_info}\n Transport Expenses: {transport_expense_info}\n Other Expenses: {other_expense_info}"
+
+
+
     match selected_option:
 
         case 0:
              while True:
-                current_user_data = users_data[current_user.name]
-                primary_income_amount = current_user_data['primary_income']['amount']
-                supplementary_income_amount = current_user_data['supplementary_income']['amount']
-                user_income_info = f" Primary Income: {primary_income_amount} ({current_user_data['primary_income']['occurrence']})\n Supplementary Income: {supplementary_income_amount} ({current_user_data['supplementary_income']['occurrence']})\n"
-                add_income_prompt = f"{user_income_info}\n Select an option:"
+                add_income_prompt = f" Income Data: (exit menu to refresh)\n{user_income_info}\n Select an option:"
 
                 selected_sub_option = display_menu(add_income_options, add_income_prompt)
                 if selected_sub_option in [0, 1]:
@@ -78,7 +113,9 @@ while True:
                     
         case 2:
             while True:
-                selected_sub_option = display_menu(calculate_average_options, "How would you like to calculate your finances?")
+                calculate_average_prompt = f"Current Financial Data: (exit menu to refresh)\n {user_income_info}\n {user_expense_info}\n How would you like to calculate your finances?"
+
+                selected_sub_option = display_menu(calculate_average_options, calculate_average_prompt)
                 if selected_sub_option == len(calculate_average_options) - 1:
                     break
         case 3:
