@@ -73,16 +73,12 @@ while True:
                 match selected_sub_option:
                     case 0:
                         add_expenses(user, 'home')
-                        break
                     case 1:
                         add_expenses(user, 'food')
-                        break
                     case 2:
                         add_expenses(user, 'transport')
-                        break
                     case 3:
                         add_expenses(user, 'other')
-                        break
                     case 4:
                         break
                     

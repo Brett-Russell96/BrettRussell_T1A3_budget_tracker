@@ -6,40 +6,40 @@
             "occurrence": "Fortnightly"
         },
         "supplementary_income": {
-            "amount": 200.0,
-            "occurrence": "Weekly"
+            "amount": 500.0,
+            "occurrence": "Monthly"
         },
-        "fixed_costs": {
-            "rent": {
-                "amount": 0.0,
-                "occurrence": ""
+        "costs": {
+            "home": {
+                "rent": {
+                    "amount": 0.0,
+                    "occurrence": ""
+                },
+                "mortgage": {
+                    "amount": 0.0,
+                    "occurrence": ""
+                },
+                "power": {
+                    "amount": 0.0,
+                    "occurrence": ""
+                },
+                "gas": {
+                    "amount": 0.0,
+                    "occurrence": ""
+                },
+                "water": {
+                    "amount": 0.0,
+                    "occurrence": ""
+                },
+                "internet": {
+                    "amount": 0.0,
+                    "occurrence": ""
+                },
+                "phone": {
+                    "amount": 0.0,
+                    "occurrence": ""
+                }
             },
-            "mortgage": {
-                "amount": 0.0,
-                "occurrence": ""
-            },
-            "power": {
-                "amount": 0.0,
-                "occurrence": ""
-            },
-            "gas": {
-                "amount": 0.0,
-                "occurrence": ""
-            },
-            "water": {
-                "amount": 0.0,
-                "occurrence": ""
-            },
-            "internet": {
-                "amount": 0.0,
-                "occurrence": ""
-            },
-            "phone": {
-                "amount": 0.0,
-                "occurrence": ""
-            }
-        },
-        "flexible_costs": {
             "food": {
                 "groceries": {
                     "amount": 0.0,
