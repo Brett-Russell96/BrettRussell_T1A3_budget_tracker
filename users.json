@@ -2,71 +2,68 @@
     "Brett": {
         "name": "Brett",
         "total_income": {
-            "amount": 0.0,
-            "occurrence": ""
+            "amount": 1438.4615384615386,
+            "occurrence": "Weekly"
         },
         "total_expense": {
-            "amount": 0.0,
-            "occurrence": ""
+            "amount": 1001.3846153846155,
+            "occurrence": "Weekly"
         },
         "remaining_funds": {
-            "amount": 0.0,
-            "occurrence": ""
+            "amount": 437.0769230769231,
+            "occurrence": "Weekly"
         },
         "primary_income": {
-            "amount": 0.0,
-            "occurrence": ""
+            "amount": 2600.0,
+            "occurrence": "Fortnightly"
         },
         "supplementary_income": {
-            "amount": 0.0,
-            "occurrence": ""
+            "amount": 600.0,
+            "occurrence": "Monthly"
         },
         "expense": {
             "home": {
                 "Rent": {
-                    "amount": 0.0,
-                    "occurrence": ""
+                    "amount": 2390.0,
+                    "occurrence": "Monthly"
                 },
                 "Mortgage": {
                     "amount": 0.0,
                     "occurrence": ""
                 },
                 "Power": {
-                    "amount": 0.0,
-                    "occurrence": ""
+                    "amount": 80.0,
+                    "occurrence": "Monthly"
                 },
                 "Gas": {
-                    "amount": 0.0,
-                    "occurrence": ""
+                    "amount": 40.0,
+                    "occurrence": "Monthly"
                 },
                 "Water": {
-                    "amount": 0.0,
-                    "occurrence": ""
+                    "amount": 25.0,
+                    "occurrence": "Monthly"
                 },
                 "Internet": {
-                    "amount": 0.0,
-                    "occurrence": ""
+                    "amount": 70.0,
+                    "occurrence": "Monthly"
                 },
                 "Phone": {
-                    "amount": 0.0,
-                    "occurrence": ""
+                    "amount": 45.0,
+                    "occurrence": "Monthly"
                 }
             },
             "food": {
                 "Groceries": {
-                    "amount": 0.0,
-                    "goal_amount": 0.0,
-                    "occurrence": ""
+                    "amount": 550.0,
+                    "occurrence": "Fortnightly"
                 },
                 "Fast Food": {
-                    "amount": 0.0,
-                    "goal_amount": 0.0,
-                    "occurrence": ""
+                    "amount": 150.0,
+                    "occurrence": "Fortnightly"
                 },
                 "Eating Out": {
                     "amount": 0.0,
-                    "goal_amount": 0.0,
-                    "occurrence": ""
+                    "occurrence": "Fortnightly"
                 }
             },
             "transport": {
@@ -86,26 +83,22 @@
                     "occurrence": ""
                 },
                 "Ride Share": {
-                    "amount": 0.0,
-                    "goal_amount": 0.0,
-                    "occurrence": ""
+                    "amount": 20.0,
+                    "occurrence": "Fortnightly"
                 }
             },
             "other": {
                 "Streaming Services": {
-                    "amount": 0.0,
-                    "goal_amount": 0.0,
-                    "occurrence": ""
+                    "amount": 40.0,
+                    "occurrence": "Monthly"
                 },
                 "Gym Membership": {
-                    "amount": 0.0,
-                    "goal_amount": 0.0,
-                    "occurrence": ""
+                    "amount": 32.0,
+                    "occurrence": "Fortnightly"
                 },
                 "Subscriptions": {
-                    "amount": 0.0,
-                    "goal_amount": 0.0,
-                    "occurrence": ""
+                    "amount": 20.0,
+                    "occurrence": "Monthly"
                 }
             }
         }

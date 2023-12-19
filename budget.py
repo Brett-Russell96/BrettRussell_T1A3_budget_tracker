@@ -1,5 +1,5 @@
 import json
-from functions import display_menu, load_users, save_users, user_selection_menu, new_user_creation, save_user_data, add_income, add_expenses, generate_expense_info, generate_income_info, saved_users, users_data, filename
+from functions import display_menu, load_users, save_users, user_selection_menu, new_user_creation, save_user_data, add_income, add_expenses, generate_expense_info, generate_income_info, calculate_finance, saved_users, users_data, filename
 from classes import User
 from lists import main_menu_options, add_income_options, add_expenses_options, calculate_average_options, create_budget_options, basic_options
 from colored import fg, bg, attr
@@ -41,13 +41,17 @@ else:
 
 
 while True:
-    selected_option = display_menu(main_menu_options, "Main Menu")
-
     current_user_data = users_data[current_user.name]
 
+    user_finance_info = generate_income_info({
+        "Total Income": current_user_data['total_income'],
+        "Total Expenses": current_user_data['total_expense'],
+        "Remaining Funds": current_user_data['remaining_funds']
+    })
+
     user_income_info = generate_income_info({
-        'Primary': current_user_data['primary_income'],
-        'Supplementary': current_user_data['supplementary_income']
+        'Primary Income': current_user_data['primary_income'],
+        'Supplementary Income': current_user_data['supplementary_income']
     })
 
     home_expense_info = generate_expense_info(current_user_data['expense']['home'])
@@ -57,11 +61,15 @@ while True:
 
     user_expense_info = f"Home Expenses:\n     {home_expense_info}\n Food Expenses:\n     {food_expense_info}\n Transport Expenses:\n     {transport_expense_info}\n Other Expenses:\n     {other_expense_info}"
 
+    main_prompt = f"Budget Tracker\n {user_finance_info}\nMain Menu"
+
+    selected_option = display_menu(main_menu_options, main_prompt)
+
     match selected_option:
 
         case 0:
              while True:
-                add_income_prompt = f" Income Data: (exit menu to refresh)\n{user_income_info}\n Select an option:"
+                add_income_prompt = f"Income Data: (exit menu to refresh)\n {user_income_info}\nSelect an option:"
 
                 selected_sub_option = display_menu(add_income_options, add_income_prompt)
                 if selected_sub_option in [0, 1]:
@@ -93,6 +101,10 @@ while True:
                 selected_sub_option = display_menu(calculate_average_options, calculate_average_prompt)
                 if selected_sub_option == len(calculate_average_options) - 1:
                     break
+                else:
+                    time_frame = calculate_average_options[selected_sub_option]
+                    total_income, total_expense, remaining_funds = calculate_finance(current_user, time_frame)
+                    save_user_data(users_data, current_user, filename)
         case 3:
             while True:
                 selected_sub_option = display_menu(create_budget_options, "What would you like to do?")

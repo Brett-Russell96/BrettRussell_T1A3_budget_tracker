@@ -79,9 +79,9 @@ def save_user_data(users_data, user, filename):
 def generate_income_info(income_data):
     income_info = ""
     for income_type, details in income_data.items():
-        amount = details['amount']
+        amount = int(details['amount'])
         occurrence = details['occurrence']
-        income_info += f"{income_type} Income: {amount} ({occurrence})\n "
+        income_info += f"{income_type}: ${amount} ({occurrence})\n "
     return income_info
 
 
@@ -89,9 +89,9 @@ def generate_income_info(income_data):
 def generate_expense_info(category_data):
     expense_info = ""
     for expense_type, details in category_data.items():
-        amount = details['amount']
+        amount = int(details['amount'])
         occurrence = details['occurrence']
-        expense_info += f"{expense_type}: {amount} ({occurrence})\n     "
+        expense_info += f"{expense_type}: ${amount} ({occurrence})\n     "
     return expense_info.rstrip()
 
 
@@ -163,8 +163,32 @@ def add_expenses(user, expense_category):
                 print("Invalid input, please use only numbers.")
             
 
-def calculate_finance():
-    pass
+def calculate_finance(user, time_frame):
+    conversion = {
+        "Weekly": {"Weekly": 1, "Fortnightly": 0.5, "Monthly": 12 / 52},
+        "Fortnightly": { "Weekly": 2, "Fortnightly": 1, "Monthly": 12 / 26},
+        "Monthly": { "Weekly": 52 / 12, "Fortnightly": 26 / 12, "Monthly": 1}
+    }
+    total_income = 0
+    total_expense = 0
+
+    for income in [user.primary_income, user.supplementary_income]:
+        if income['amount'] > 0:
+            total_income += income['amount'] * conversion[time_frame][income['occurrence']]
+    
+    for category, expenses in user.expense.items():
+        for expense in expenses.values():
+            if expense['amount'] > 0:
+                total_expense += expense['amount'] * conversion[time_frame][expense['occurrence']]
+    
+    remaining_funds = total_income - total_expense
+
+    user.total_income = {"amount": total_income, "occurrence": time_frame}
+    user.total_expense = {"amount": total_expense, "occurrence": time_frame}
+    user.remaining_funds = {"amount": remaining_funds, "occurrence": time_frame}
+
+    return total_income, total_expense, remaining_funds
+
 
 
 def create_budget():
