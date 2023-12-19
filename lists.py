@@ -13,7 +13,6 @@ main_menu_options = [
     "Add Income",
     "Add Expenses",
     "Calculate Finances",
-    "Create a Budget",
     "New User",
     "Switch User",
     "Delete User",
@@ -80,10 +79,6 @@ calculate_average_options = [
     "Main Menu"
 ]
 
-create_budget_options = [
-    "Create a Budget",
-    "Main Menu"
-]
 
 basic_options = [
     "Yes",

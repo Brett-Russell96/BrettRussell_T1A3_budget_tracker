@@ -1,6 +1,6 @@
 import json 
 import readchar
-from classes import Income, User, primary_income, supplementary_income
+from user import User
 from lists import occurrence_options, basic_options, home_expense_options, food_expense_options, transport_expense_options, other_expense_options
 
 
@@ -38,7 +38,7 @@ def load_users(filename):
             data = json.load(file)
             return {name: (info if isinstance(info, dict) else {}) for name, info in data.items()}
     except FileNotFoundError:
-        print("Welcome to the Budget Tracker!")
+        print("Welcome to the Expense Tracker!")
         return {}
 users_data = load_users(filename)
 
@@ -58,14 +58,28 @@ def user_selection_menu(saved_users):
 
 
 
+def switch_user(saved_users):
+    user_names = [user.name for user in saved_users] +["Main Menu"]
+    selected_option = display_menu(user_names, "Select User")
+    return selected_option
+
+
+
 def new_user_creation():
     create_new_user = display_menu(basic_options, "Would you like to create a new user?")
     if create_new_user == 0:
-        user_name = input("Please enter a name: ")
-        new_user = User(user_name)
-        return new_user
+        while True:
+            user_name = input("Please enter a name (press 'q' to return): ")
+            if user_name.lower() == 'q':
+                return None
+            elif user_name.strip():
+                new_user = User(user_name)
+                return new_user
+            else:
+                print("Name field cannot be empty, please enter a name.")
     else:
         return None
+    
 
 
 
@@ -188,6 +202,7 @@ def calculate_finance(user, time_frame):
     user.remaining_funds = {"amount": remaining_funds, "occurrence": time_frame}
 
     return total_income, total_expense, remaining_funds
+    
 
 
 
@@ -199,8 +214,7 @@ def new_user():
     pass
 
 
-def switch_user():
-    pass
+
 
 
 def delete_user():

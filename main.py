@@ -1,7 +1,7 @@
 import json
-from functions import display_menu, load_users, save_users, user_selection_menu, new_user_creation, save_user_data, add_income, add_expenses, generate_expense_info, generate_income_info, calculate_finance, saved_users, users_data, filename
-from classes import User
-from lists import main_menu_options, add_income_options, add_expenses_options, calculate_average_options, create_budget_options, basic_options
+from functions import display_menu, load_users, save_users,switch_user, user_selection_menu, new_user_creation, save_user_data, add_income, add_expenses, generate_expense_info, generate_income_info, calculate_finance, saved_users, users_data, filename
+from user import User
+from lists import main_menu_options, add_income_options, add_expenses_options, calculate_average_options, basic_options
 from colored import fg, bg, attr
 import readchar
 
@@ -61,7 +61,7 @@ while True:
 
     user_expense_info = f"Home Expenses:\n     {home_expense_info}\n Food Expenses:\n     {food_expense_info}\n Transport Expenses:\n     {transport_expense_info}\n Other Expenses:\n     {other_expense_info}"
 
-    main_prompt = f"Budget Tracker\n {user_finance_info}\nMain Menu"
+    main_prompt = f"Expense Tracker\nCurrent User: {current_user.name}\n {user_finance_info}\nMain Menu"
 
     selected_option = display_menu(main_menu_options, main_prompt)
 
@@ -105,22 +105,23 @@ while True:
                     time_frame = calculate_average_options[selected_sub_option]
                     total_income, total_expense, remaining_funds = calculate_finance(current_user, time_frame)
                     save_user_data(users_data, current_user, filename)
+                    break
+ 
         case 3:
-            while True:
-                selected_sub_option = display_menu(create_budget_options, "What would you like to do?")
-                if selected_sub_option == len(create_budget_options) - 1:
-                    break
+            new_user = new_user_creation()
+            if new_user:
+                saved_users.append(new_user)
+                users_data[new_user.name] = new_user.to_dict()
+                save_users(users_data, filename)
+                current_user = new_user
+             
         case 4:
-            while True:
-                selected_sub_option = display_menu(basic_options, "Would you like to create a new user?")
-                if selected_sub_option == len(basic_options) - 1:
-                    break
+            selected_user_index = switch_user(saved_users)
+            if selected_user_index < len(saved_users):
+                    current_user = saved_users[selected_user_index]
+            else:
+                continue
         case 5:
-            while True:
-                selected_sub_option = display_menu(basic_options, "Would you like to change to another user?")
-                if selected_sub_option == len(basic_options) - 1:
-                    break
-        case 6:
             while True:
                 selected_sub_option = display_menu(basic_options, "Would you like to delete this user?")
                 if selected_sub_option == len(basic_options) - 1:
@@ -131,4 +132,4 @@ while True:
 
 
 
-print("Thankyou for using Budget Tracker!")
+print("Thankyou for using Expense Tracker!")

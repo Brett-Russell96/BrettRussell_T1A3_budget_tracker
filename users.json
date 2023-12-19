@@ -2,103 +2,201 @@
     "Brett": {
         "name": "Brett",
         "total_income": {
-            "amount": 1438.4615384615386,
-            "occurrence": "Weekly"
+            "amount": 0.0,
+            "occurrence": ""
         },
         "total_expense": {
-            "amount": 1001.3846153846155,
-            "occurrence": "Weekly"
+            "amount": 0.0,
+            "occurrence": ""
         },
         "remaining_funds": {
-            "amount": 437.0769230769231,
-            "occurrence": "Weekly"
+            "amount": 0.0,
+            "occurrence": ""
         },
         "primary_income": {
-            "amount": 2600.0,
-            "occurrence": "Fortnightly"
+            "amount": 0.0,
+            "occurrence": ""
         },
         "supplementary_income": {
-            "amount": 600.0,
-            "occurrence": "Monthly"
+            "amount": 0.0,
+            "occurrence": ""
         },
         "expense": {
             "home": {
                 "Rent": {
-                    "amount": 2390.0,
-                    "occurrence": "Monthly"
+                    "amount": 0.0,
+                    "occurrence": ""
                 },
                 "Mortgage": {
                     "amount": 0.0,
                     "occurrence": ""
                 },
                 "Power": {
-                    "amount": 80.0,
-                    "occurrence": "Monthly"
+                    "amount": 0.0,
+                    "occurrence": ""
                 },
                 "Gas": {
-                    "amount": 40.0,
-                    "occurrence": "Monthly"
+                    "amount": 0.0,
+                    "occurrence": ""
                 },
                 "Water": {
-                    "amount": 25.0,
-                    "occurrence": "Monthly"
+                    "amount": 0.0,
+                    "occurrence": ""
                 },
                 "Internet": {
-                    "amount": 70.0,
-                    "occurrence": "Monthly"
+                    "amount": 0.0,
+                    "occurrence": ""
                 },
                 "Phone": {
-                    "amount": 45.0,
-                    "occurrence": "Monthly"
+                    "amount": 0.0,
+                    "occurrence": ""
                 }
             },
             "food": {
                 "Groceries": {
-                    "amount": 550.0,
-                    "occurrence": "Fortnightly"
+                    "amount": 0.0,
+                    "occurrence": ""
                 },
                 "Fast Food": {
-                    "amount": 150.0,
-                    "occurrence": "Fortnightly"
+                    "amount": 0.0,
+                    "occurrence": ""
                 },
                 "Eating Out": {
                     "amount": 0.0,
-                    "occurrence": "Fortnightly"
+                    "occurrence": ""
                 }
             },
             "transport": {
                 "Fuel": {
                     "amount": 0.0,
-                    "goal_amount": 0.0,
                     "occurrence": ""
                 },
                 "Parking": {
                     "amount": 0.0,
-                    "goal_amount": 0.0,
                     "occurrence": ""
                 },
                 "Public Transport": {
                     "amount": 0.0,
-                    "goal_amount": 0.0,
                     "occurrence": ""
                 },
                 "Ride Share": {
-                    "amount": 20.0,
-                    "occurrence": "Fortnightly"
+                    "amount": 0.0,
+                    "occurrence": ""
                 }
             },
             "other": {
                 "Streaming Services": {
-                    "amount": 40.0,
-                    "occurrence": "Monthly"
+                    "amount": 0.0,
+                    "occurrence": ""
                 },
                 "Gym Membership": {
-                    "amount": 32.0,
-                    "occurrence": "Fortnightly"
+                    "amount": 0.0,
+                    "occurrence": ""
                 },
                 "Subscriptions": {
-                    "amount": 20.0,
-                    "occurrence": "Monthly"
+                    "amount": 0.0,
+                    "occurrence": ""
+                }
+            }
+        }
+    },
+    "John": {
+        "name": "John",
+        "total_income": {
+            "amount": 0.0,
+            "occurrence": ""
+        },
+        "total_expense": {
+            "amount": 0.0,
+            "occurrence": ""
+        },
+        "remaining_funds": {
+            "amount": 0.0,
+            "occurrence": ""
+        },
+        "primary_income": {
+            "amount": 0.0,
+            "occurrence": ""
+        },
+        "supplementary_income": {
+            "amount": 0.0,
+            "occurrence": ""
+        },
+        "expense": {
+            "home": {
+                "Rent": {
+                    "amount": 0.0,
+                    "occurrence": ""
+                },
+                "Mortgage": {
+                    "amount": 0.0,
+                    "occurrence": ""
+                },
+                "Power": {
+                    "amount": 0.0,
+                    "occurrence": ""
+                },
+                "Gas": {
+                    "amount": 0.0,
+                    "occurrence": ""
+                },
+                "Water": {
+                    "amount": 0.0,
+                    "occurrence": ""
+                },
+                "Internet": {
+                    "amount": 0.0,
+                    "occurrence": ""
+                },
+                "Phone": {
+                    "amount": 0.0,
+                    "occurrence": ""
+                }
+            },
+            "food": {
+                "Groceries": {
+                    "amount": 0.0,
+                    "occurrence": ""
+                },
+                "Fast Food": {
+                    "amount": 0.0,
+                    "occurrence": ""
+                },
+                "Eating Out": {
+                    "amount": 0.0,
+                    "occurrence": ""
+                }
+            },
+            "transport": {
+                "Fuel": {
+                    "amount": 0.0,
+                    "occurrence": ""
+                },
+                "Parking": {
+                    "amount": 0.0,
+                    "occurrence": ""
+                },
+                "Public Transport": {
+                    "amount": 0.0,
+                    "occurrence": ""
+                },
+                "Ride Share": {
+                    "amount": 0.0,
+                    "occurrence": ""
+                }
+            },
+            "other": {
+                "Streaming Services": {
+                    "amount": 0.0,
+                    "occurrence": ""
+                },
+                "Gym Membership": {
+                    "amount": 0.0,
+                    "occurrence": ""
+                },
+                "Subscriptions": {
+                    "amount": 0.0,
+                    "occurrence": ""
                 }
             }
         }
