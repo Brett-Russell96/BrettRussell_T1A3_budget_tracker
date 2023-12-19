@@ -1,5 +1,5 @@
 import json
-from functions import display_menu, load_users, save_users, user_selection_menu, new_user_creation, save_user_data, add_income, add_expenses, saved_users, users_data, filename
+from functions import display_menu, load_users, save_users, user_selection_menu, new_user_creation, save_user_data, add_income, add_expenses, generate_expense_info, generate_income_info, saved_users, users_data, filename
 from classes import User
 from lists import main_menu_options, add_income_options, add_expenses_options, calculate_average_options, create_budget_options, basic_options
 from colored import fg, bg, attr
@@ -45,42 +45,17 @@ while True:
 
     current_user_data = users_data[current_user.name]
 
-    primary_income_info = f"{current_user_data['primary_income']['amount']} ({current_user_data['primary_income']['occurrence']})"
-    supplementary_income_info = f"{current_user_data['supplementary_income']['amount']} ({current_user_data['supplementary_income']['occurrence']})"
+    user_income_info = generate_income_info({
+        'Primary': current_user_data['primary_income'],
+        'Supplementary': current_user_data['supplementary_income']
+    })
 
-    user_income_info = f"Primary Income:\n     {primary_income_info}\n Supplementary Income:\n     {supplementary_income_info}"
-
-    home_expense_info = ""
-    for expense_type, details in current_user_data['expense']['home'].items():
-        amount = details['amount']
-        occurrence = details['occurrence']
-        home_expense_info += f"{expense_type}: {amount} ({occurrence})\n     "
-    home_expense_info = home_expense_info.rstrip()
-
-    food_expense_info = ""
-    for expense_type, details in current_user_data['expense']['food'].items():
-        amount = details['amount']
-        occurrence = details['occurrence']
-        food_expense_info += f"{expense_type}: {amount} ({occurrence})\n     "
-    food_expense_info = food_expense_info.rstrip()
-
-    transport_expense_info = ""
-    for expense_type, details in current_user_data['expense']['transport'].items():
-        amount = details['amount']
-        occurrence = details['occurrence']
-        transport_expense_info += f"{expense_type}: {amount} ({occurrence})\n     "
-    transport_expense_info = transport_expense_info.rstrip()
-
-    other_expense_info = ""
-    for expense_type, details in current_user_data['expense']['other'].items():
-        amount = details['amount']
-        occurrence = details['occurrence']
-        other_expense_info += f"{expense_type}: {amount} ({occurrence})\n     "
-    other_expense_info = other_expense_info.rstrip()
+    home_expense_info = generate_expense_info(current_user_data['expense']['home'])
+    food_expense_info = generate_expense_info(current_user_data['expense']['food'])
+    transport_expense_info = generate_expense_info(current_user_data['expense']['transport'])
+    other_expense_info = generate_expense_info(current_user_data['expense']['other'])
 
     user_expense_info = f"Home Expenses:\n     {home_expense_info}\n Food Expenses: {food_expense_info}\n Transport Expenses: {transport_expense_info}\n Other Expenses: {other_expense_info}"
-
-
 
     match selected_option:
 
@@ -113,7 +88,7 @@ while True:
                     
         case 2:
             while True:
-                calculate_average_prompt = f"Current Financial Data: (exit menu to refresh)\n {user_income_info}\n {user_expense_info}\n How would you like to calculate your finances?"
+                calculate_average_prompt = f"Current Financial Data: (exit menu to refresh)\n {user_income_info}\n {user_expense_info}\n\n How would you like to calculate your finances?"
 
                 selected_sub_option = display_menu(calculate_average_options, calculate_average_prompt)
                 if selected_sub_option == len(calculate_average_options) - 1:

@@ -76,6 +76,27 @@ def save_user_data(users_data, user, filename):
 
 
 
+def generate_income_info(income_data):
+    income_info = ""
+    for income_type, details in income_data.items():
+        amount = details['amount']
+        occurrence = details['occurrence']
+        income_info += f"{income_type} Income: {amount} ({occurrence})\n "
+    return income_info
+
+
+
+
+def generate_expense_info(category_data):
+    expense_info = ""
+    for expense_type, details in category_data.items():
+        amount = details['amount']
+        occurrence = details['occurrence']
+        expense_info += f"{expense_type}: {amount} ({occurrence})\n     "
+    return expense_info.rstrip()
+
+
+
 def add_income(user, income_type):
     
 
