@@ -55,7 +55,7 @@ while True:
     transport_expense_info = generate_expense_info(current_user_data['expense']['transport'])
     other_expense_info = generate_expense_info(current_user_data['expense']['other'])
 
-    user_expense_info = f"Home Expenses:\n     {home_expense_info}\n Food Expenses: {food_expense_info}\n Transport Expenses: {transport_expense_info}\n Other Expenses: {other_expense_info}"
+    user_expense_info = f"Home Expenses:\n     {home_expense_info}\n Food Expenses:\n     {food_expense_info}\n Transport Expenses:\n     {transport_expense_info}\n Other Expenses:\n     {other_expense_info}"
 
     match selected_option:
 
@@ -88,7 +88,7 @@ while True:
                     
         case 2:
             while True:
-                calculate_average_prompt = f"Current Financial Data: (exit menu to refresh)\n {user_income_info}\n {user_expense_info}\n\n How would you like to calculate your finances?"
+                calculate_average_prompt = f"Current Financial Data: (exit menu to refresh)\n\n {user_income_info}\n {user_expense_info}\n\nHow would you like to calculate your finances?"
 
                 selected_sub_option = display_menu(calculate_average_options, calculate_average_prompt)
                 if selected_sub_option == len(calculate_average_options) - 1:

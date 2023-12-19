@@ -1,6 +1,9 @@
 class User:
     def __init__(self, name):
         self.name = name
+        self.total_income = {"amount": 0.0, "occurrence": ""}
+        self.total_expense = {"amount": 0.0, "occurrence": ""}
+        self.remaining_funds = {"amount": 0.0, "occurrence": ""}
         self.primary_income = {"amount": 0.0, "occurrence": ""}
         self.supplementary_income = {"amount": 0.0, "occurrence": ""}
         self.expense = {

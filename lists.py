@@ -12,7 +12,7 @@ occurrence_options = [
 main_menu_options = [
     "Add Income",
     "Add Expenses",
-    "Calculate Average",
+    "Calculate Finances",
     "Create a Budget",
     "New User",
     "Switch User",
@@ -82,7 +82,6 @@ calculate_average_options = [
 
 create_budget_options = [
     "Create a Budget",
-    "See Savings Goal",
     "Main Menu"
 ]
 

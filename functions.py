@@ -86,7 +86,6 @@ def generate_income_info(income_data):
 
 
 
-
 def generate_expense_info(category_data):
     expense_info = ""
     for expense_type, details in category_data.items():
@@ -98,9 +97,8 @@ def generate_expense_info(category_data):
 
 
 def add_income(user, income_type):
-    
-
     occurrence = display_menu(occurrence_options, "How often do you receive this income source?")
+
     if occurrence_options[occurrence] == "Previous Section":
         return
     
@@ -124,8 +122,6 @@ def add_income(user, income_type):
         except ValueError:
             print("Invalid input, please use only numbers.")
     
-
-
 
 
 
@@ -167,7 +163,7 @@ def add_expenses(user, expense_category):
                 print("Invalid input, please use only numbers.")
             
 
-def calculate_average():
+def calculate_finance():
     pass
 
 

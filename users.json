@@ -1,89 +1,111 @@
 {
     "Brett": {
         "name": "Brett",
+        "total_income": {
+            "amount": 0.0,
+            "occurrence": ""
+        },
+        "total_expense": {
+            "amount": 0.0,
+            "occurrence": ""
+        },
+        "remaining_funds": {
+            "amount": 0.0,
+            "occurrence": ""
+        },
         "primary_income": {
-            "amount": 2600.0,
-            "occurrence": "Monthly"
+            "amount": 0.0,
+            "occurrence": ""
         },
         "supplementary_income": {
-            "amount": 1000.0,
-            "occurrence": "Monthly"
+            "amount": 0.0,
+            "occurrence": ""
         },
         "expense": {
             "home": {
                 "Rent": {
-                    "amount": 2390.0,
-                    "occurrence": "Monthly"
+                    "amount": 0.0,
+                    "occurrence": ""
                 },
                 "Mortgage": {
                     "amount": 0.0,
                     "occurrence": ""
                 },
                 "Power": {
-                    "amount": 90.0,
-                    "occurrence": "Monthly"
+                    "amount": 0.0,
+                    "occurrence": ""
                 },
                 "Gas": {
-                    "amount": 40.0,
-                    "occurrence": "Monthly"
+                    "amount": 0.0,
+                    "occurrence": ""
                 },
                 "Water": {
-                    "amount": 25.0,
-                    "occurrence": "Monthly"
+                    "amount": 0.0,
+                    "occurrence": ""
                 },
                 "Internet": {
-                    "amount": 70.0,
-                    "occurrence": "Monthly"
+                    "amount": 0.0,
+                    "occurrence": ""
                 },
                 "Phone": {
-                    "amount": 45.0,
-                    "occurrence": "Monthly"
+                    "amount": 0.0,
+                    "occurrence": ""
                 }
             },
             "food": {
                 "Groceries": {
-                    "amount": 500.0,
-                    "occurrence": "Fortnightly"
+                    "amount": 0.0,
+                    "goal_amount": 0.0,
+                    "occurrence": ""
                 },
                 "Fast Food": {
-                    "amount": 150.0,
-                    "occurrence": "Fortnightly"
+                    "amount": 0.0,
+                    "goal_amount": 0.0,
+                    "occurrence": ""
                 },
                 "Eating Out": {
-                    "amount": 50.0,
-                    "occurrence": "Fortnightly"
+                    "amount": 0.0,
+                    "goal_amount": 0.0,
+                    "occurrence": ""
                 }
             },
             "transport": {
                 "Fuel": {
-                    "amount": 100.0,
-                    "occurrence": "Fortnightly"
+                    "amount": 0.0,
+                    "goal_amount": 0.0,
+                    "occurrence": ""
                 },
                 "Parking": {
-                    "amount": 80.0,
-                    "occurrence": "Fortnightly"
+                    "amount": 0.0,
+                    "goal_amount": 0.0,
+                    "occurrence": ""
                 },
                 "Public Transport": {
-                    "amount": 30.0,
-                    "occurrence": "Monthly"
+                    "amount": 0.0,
+                    "goal_amount": 0.0,
+                    "occurrence": ""
                 },
                 "Ride Share": {
-                    "amount": 50.0,
-                    "occurrence": "Monthly"
+                    "amount": 0.0,
+                    "goal_amount": 0.0,
+                    "occurrence": ""
                 }
             },
             "other": {
                 "Streaming Services": {
-                    "amount": 40.0,
-                    "occurrence": "Monthly"
+                    "amount": 0.0,
+                    "goal_amount": 0.0,
+                    "occurrence": ""
                 },
                 "Gym Membership": {
-                    "amount": 32.0,
-                    "occurrence": "Fortnightly"
+                    "amount": 0.0,
+                    "goal_amount": 0.0,
+                    "occurrence": ""
                 },
                 "Subscriptions": {
-                    "amount": 20.0,
-                    "occurrence": "Monthly"
+                    "amount": 0.0,
+                    "goal_amount": 0.0,
+                    "occurrence": ""
                 }
             }
         }
