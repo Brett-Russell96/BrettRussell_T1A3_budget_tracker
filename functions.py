@@ -1,18 +1,27 @@
 import json 
-import readchar
-from user import User
-from lists import occurrence_options, basic_options, home_expense_options, food_expense_options, transport_expense_options, other_expense_options
 
+import readchar
+from colored import fg, bg, attr
+
+from user import User
+from lists import occurrence_options, basic_options, home_expense_options
+from lists import food_expense_options, transport_expense_options, other_expense_options
+
+COLOR_GREEN = fg('green')
+COLOR_RED = fg('red')
+COLOR_BLUE = fg('blue')
+RESET_COLOR = attr('reset')
+COLOR_YELLOW = fg('yellow')
 
 saved_users = [] 
 filename = "users.json"   
 
 
-def display_menu(options, title = "menu"):
+def display_menu(options, title="menu"):
     current_selection = 0
 
     while True:
-        print("\033[H\033[J", end = "")
+        print("\033[H\033[J", end="")
 
         print(title)
         for i, option in enumerate(options):
@@ -31,7 +40,6 @@ def display_menu(options, title = "menu"):
     return current_selection
 
 
-
 def load_users(filename):
     try:
         with open(filename, "r") as file:
@@ -40,14 +48,14 @@ def load_users(filename):
     except FileNotFoundError:
         print("Welcome to the Expense Tracker!")
         return {}
+    
+
 users_data = load_users(filename)
 
 
-
-def save_users(users,filename):
+def save_users(users, filename):
     with open(filename, "w") as file:
         json.dump(users, file, indent=4)
-
 
 
 def user_selection_menu(saved_users):
@@ -57,16 +65,14 @@ def user_selection_menu(saved_users):
     return selected_option
 
 
-
 def switch_user(saved_users):
-    user_names = [user.name for user in saved_users] +["Main Menu"]
-    selected_option = display_menu(user_names, "Select User")
+    user_names = [user.name for user in saved_users] + ["Main Menu"]
+    selected_option = display_menu(user_names, f"{COLOR_YELLOW}Select User{RESET_COLOR}")
     return selected_option
 
 
-
 def new_user_creation():
-    create_new_user = display_menu(basic_options, "Would you like to create a new user?")
+    create_new_user = display_menu(basic_options, f"{COLOR_YELLOW}Would you like to create a new user?{RESET_COLOR}")
     if create_new_user == 0:
         while True:
             user_name = input("Please enter a name (press 'q' to return): ")
@@ -76,11 +82,9 @@ def new_user_creation():
                 new_user = User(user_name)
                 return new_user
             else:
-                print("Name field cannot be empty, please enter a name.")
+                print(f"{COLOR_RED}Name field cannot be empty, please enter a name.{RESET_COLOR}")
     else:
         return None
-    
-
 
 
 def save_user_data(users_data, user, filename):
@@ -89,15 +93,21 @@ def save_user_data(users_data, user, filename):
         json.dump(users_data, file, indent=4)
 
 
-
 def generate_income_info(income_data):
     income_info = ""
     for income_type, details in income_data.items():
         amount = int(details['amount'])
         occurrence = details['occurrence']
-        income_info += f"{income_type}: ${amount} ({occurrence})\n "
+        if income_type == "Total Expenses":
+            color = COLOR_RED
+        elif amount > 0:
+            color = COLOR_GREEN
+        elif amount == 0:
+            color = COLOR_BLUE
+        else:
+            color = COLOR_RED
+        income_info += f"{income_type}: {color}${amount}{RESET_COLOR} ({occurrence})\n "
     return income_info
-
 
 
 def generate_expense_info(category_data):
@@ -105,9 +115,12 @@ def generate_expense_info(category_data):
     for expense_type, details in category_data.items():
         amount = int(details['amount'])
         occurrence = details['occurrence']
-        expense_info += f"{expense_type}: ${amount} ({occurrence})\n     "
+        if amount == 0:
+            color = COLOR_BLUE
+        else:
+            color = COLOR_RED
+        expense_info += f"{expense_type}: {color}${amount}{RESET_COLOR} ({occurrence})\n     "
     return expense_info.rstrip()
-
 
 
 def add_income(user, income_type):
@@ -134,10 +147,8 @@ def add_income(user, income_type):
             save_user_data(users_data, user, filename)
             break
         except ValueError:
-            print("Invalid input, please use only numbers.")
+            print(f"{COLOR_RED}Invalid input, please use only numbers.{RESET_COLOR}")
     
-
-
 
 def add_expenses(user, expense_category):
     while True:
@@ -151,9 +162,9 @@ def add_expenses(user, expense_category):
             case "other":
                 options = other_expense_options
 
-        option = display_menu(options, "Select an expense:")        
+        option = display_menu(options, f"{COLOR_YELLOW}Select an expense:{RESET_COLOR}")        
         if option == len(options) - 1:
-                    break
+            break
         
         expense_name = options[option]
 
@@ -174,14 +185,14 @@ def add_expenses(user, expense_category):
                 save_user_data(users_data, user, filename)
                 break
             except ValueError:
-                print("Invalid input, please use only numbers.")
+                print(f"{COLOR_RED}Invalid input, please use only numbers.{RESET_COLOR}")
             
 
 def calculate_finance(user, time_frame):
     conversion = {
         "Weekly": {"Weekly": 1, "Fortnightly": 0.5, "Monthly": 12 / 52},
-        "Fortnightly": { "Weekly": 2, "Fortnightly": 1, "Monthly": 12 / 26},
-        "Monthly": { "Weekly": 52 / 12, "Fortnightly": 26 / 12, "Monthly": 1}
+        "Fortnightly": {"Weekly": 2, "Fortnightly": 1, "Monthly": 12 / 26},
+        "Monthly": {"Weekly": 52 / 12, "Fortnightly": 26 / 12, "Monthly": 1}
     }
     total_income = 0
     total_expense = 0
@@ -204,19 +215,36 @@ def calculate_finance(user, time_frame):
     return total_income, total_expense, remaining_funds
     
 
+def delete_user(current_user, saved_users, users_data, filename):
+    user_names = [user.name for user in saved_users] + ["Main Menu"]
+    selected_option = display_menu(user_names, f"{COLOR_YELLOW}Select a user to delete{RESET_COLOR}")
+    
+    if selected_option == len(saved_users):
+        return current_user
+    user_to_delete = saved_users[selected_option]
 
+    confirmation = display_menu(basic_options, f"{COLOR_RED}Deleting {user_to_delete.name} will remove all of their stored data. Are you sure you want to continue?{RESET_COLOR}")
+    if confirmation == 0:
+        saved_users.pop(selected_option)
+        users_data.pop(user_to_delete.name)
 
-def create_budget():
-    pass
+        save_users(users_data, filename)
+        print(f"User {user_to_delete.name} has been deleted.")
 
-
-def new_user():
-    pass
-
-
-
-
-
-def delete_user():
-    pass
-
+        if user_to_delete != current_user:
+            input("Press any key to return to the main menu.")
+            return current_user
+        else:
+            if not saved_users:
+                user_name = input("Please enter a name: ")
+                new_user = User(user_name)
+                saved_users.append(new_user)
+                users_data[user_name] = new_user.to_dict()
+                save_users(users_data, filename)
+                return new_user
+            else:
+                selected_user_index = user_selection_menu(saved_users)
+                return saved_users[selected_user_index]
+    else:
+        return current_user
+    

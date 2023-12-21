@@ -30,7 +30,7 @@ class User:
             "other": {
                 "Streaming Services": {"amount": 0.0, "occurrence": ""},
                 "Gym Membership": {"amount": 0.0, "occurrence": ""},
-                "Subscriptions": {"amount": 0.0,"occurrence": ""}
+                "Subscriptions": {"amount": 0.0, "occurrence": ""}
             }
         }
 

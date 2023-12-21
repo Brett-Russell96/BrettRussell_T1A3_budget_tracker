@@ -1,7 +1,5 @@
 
 
-
-
 occurrence_options = [
     "Weekly",
     "Fortnightly",

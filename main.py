@@ -1,9 +1,18 @@
-import json
-from functions import display_menu, load_users, save_users,switch_user, user_selection_menu, new_user_creation, save_user_data, add_income, add_expenses, generate_expense_info, generate_income_info, calculate_finance, saved_users, users_data, filename
-from user import User
-from lists import main_menu_options, add_income_options, add_expenses_options, calculate_average_options, basic_options
 from colored import fg, bg, attr
-import readchar
+
+from functions import display_menu, save_users, switch_user
+from functions import user_selection_menu, new_user_creation, save_user_data
+from functions import add_income, add_expenses, generate_expense_info
+from functions import generate_income_info, calculate_finance, delete_user
+from functions import saved_users, users_data, filename
+from user import User
+from lists import main_menu_options, add_income_options, add_expenses_options, calculate_average_options
+
+
+COLOR_YELLOW = fg('yellow')
+COLOR_BLUE = fg('blue')
+RESET_COLOR = attr('reset')
+
 
 
 
@@ -39,7 +48,6 @@ else:
                 break
 
 
-
 while True:
     current_user_data = users_data[current_user.name]
 
@@ -59,9 +67,30 @@ while True:
     transport_expense_info = generate_expense_info(current_user_data['expense']['transport'])
     other_expense_info = generate_expense_info(current_user_data['expense']['other'])
 
-    user_expense_info = f"Home Expenses:\n     {home_expense_info}\n Food Expenses:\n     {food_expense_info}\n Transport Expenses:\n     {transport_expense_info}\n Other Expenses:\n     {other_expense_info}"
+    user_expense_info = (
+        "Home Expenses:\n     {home}\n"
+        "Food Expenses:\n     {food}\n"
+        "Transport Expenses:\n     {transport}\n"
+        "Other Expenses:\n     {other}"
+    ).format(
+        home=home_expense_info,
+        food=food_expense_info,
+        transport=transport_expense_info,
+        other=other_expense_info
+    )
 
-    main_prompt = f"Expense Tracker\nCurrent User: {current_user.name}\n {user_finance_info}\nMain Menu"
+    main_prompt = (
+        "{yellow}Expense Tracker{reset}\n"
+        "Current User: {blue}{user}{reset}\n"
+        "{finance_info}\n"
+        "{yellow}Main Menu{reset}"
+    ).format(
+        yellow=COLOR_YELLOW, 
+        reset=RESET_COLOR, 
+        blue=COLOR_BLUE, 
+        user=current_user.name, 
+        finance_info=user_finance_info
+    )
 
     selected_option = display_menu(main_menu_options, main_prompt)
 
@@ -69,7 +98,7 @@ while True:
 
         case 0:
              while True:
-                add_income_prompt = f"Income Data: (exit menu to refresh)\n {user_income_info}\nSelect an option:"
+                add_income_prompt = f"Income Data: (exit menu to refresh)\n {user_income_info}\n{COLOR_YELLOW}Select an option:{RESET_COLOR}"
 
                 selected_sub_option = display_menu(add_income_options, add_income_prompt)
                 if selected_sub_option in [0, 1]:
@@ -81,7 +110,7 @@ while True:
 
         case 1:
             while True:
-                selected_sub_option = display_menu(add_expenses_options, "Select an option:")
+                selected_sub_option = display_menu(add_expenses_options, f"{COLOR_YELLOW}Select an option:{RESET_COLOR}")
                 match selected_sub_option:
                     case 0:
                         add_expenses(current_user, "home")
@@ -96,7 +125,7 @@ while True:
                     
         case 2:
             while True:
-                calculate_average_prompt = f"Current Financial Data: (exit menu to refresh)\n\n {user_income_info}\n {user_expense_info}\n\nHow would you like to calculate your finances?"
+                calculate_average_prompt = f"Current Financial Data: (exit menu to refresh)\n\n {user_income_info}\n {user_expense_info}\n\n{COLOR_YELLOW}How would you like to calculate your finances?{RESET_COLOR}"
 
                 selected_sub_option = display_menu(calculate_average_options, calculate_average_prompt)
                 if selected_sub_option == len(calculate_average_options) - 1:
@@ -122,14 +151,11 @@ while True:
             else:
                 continue
         case 5:
-            while True:
-                selected_sub_option = display_menu(basic_options, "Would you like to delete this user?")
-                if selected_sub_option == len(basic_options) - 1:
-                    break
+            current_user = delete_user(current_user, saved_users, users_data, filename)
 
     if selected_option == len(main_menu_options) -1:
         break
 
 
 
-print("Thankyou for using Expense Tracker!")
+print(f"{COLOR_YELLOW}Thankyou for using Expense Tracker!{RESET_COLOR}")
