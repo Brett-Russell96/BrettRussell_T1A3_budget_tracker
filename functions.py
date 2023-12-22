@@ -1,11 +1,12 @@
-import json 
+import json
 
 import readchar
-from colored import fg, bg, attr
+from colored import fg, attr
 
 from user import User
 from lists import occurrence_options, basic_options, home_expense_options
-from lists import food_expense_options, transport_expense_options, other_expense_options
+from lists import food_expense_options, transport_expense_options
+from lists import other_expense_options
 
 COLOR_GREEN = fg('green')
 COLOR_RED = fg('red')
@@ -13,8 +14,8 @@ COLOR_BLUE = fg('blue')
 RESET_COLOR = attr('reset')
 COLOR_YELLOW = fg('yellow')
 
-saved_users = [] 
-filename = "users.json"   
+saved_users = []
+filename = "users.json"
 
 
 def display_menu(options, title="menu"):
@@ -44,18 +45,30 @@ def load_users(filename):
     try:
         with open(filename, "r") as file:
             data = json.load(file)
-            return {name: (info if isinstance(info, dict) else {}) for name, info in data.items()}
+            return {
+                name: (info if isinstance(info, dict) else {})
+                for name, info in data.items()
+                }
     except FileNotFoundError:
-        print("Welcome to the Expense Tracker!")
+        print(f"{COLOR_RED}File not found. Creating a new file.{RESET_COLOR}")
         return {}
-    
+    except json.JSONDecodeError:
+        print(
+            f"{COLOR_RED}Error reading the file. "
+            f"Data may be corrupted.{RESET_COLOR}"
+            )
+        return {}
+
 
 users_data = load_users(filename)
 
 
 def save_users(users, filename):
-    with open(filename, "w") as file:
-        json.dump(users, file, indent=4)
+    try:
+        with open(filename, "w") as file:
+            json.dump(users, file, indent=4)
+    except IOError as e:
+        print(f"{COLOR_RED}Failed to save data: {e}{RESET_COLOR}")
 
 
 def user_selection_menu(saved_users):
@@ -67,22 +80,36 @@ def user_selection_menu(saved_users):
 
 def switch_user(saved_users):
     user_names = [user.name for user in saved_users] + ["Main Menu"]
-    selected_option = display_menu(user_names, f"{COLOR_YELLOW}Select User{RESET_COLOR}")
+    selected_option = display_menu(
+        user_names,
+        f"{COLOR_YELLOW}Select User{RESET_COLOR}"
+        )
     return selected_option
 
 
 def new_user_creation():
-    create_new_user = display_menu(basic_options, f"{COLOR_YELLOW}Would you like to create a new user?{RESET_COLOR}")
+    create_new_user = display_menu(
+        basic_options,
+        f"{COLOR_YELLOW}Would you like to create a new user?{RESET_COLOR}"
+        )
     if create_new_user == 0:
         while True:
             user_name = input("Please enter a name (press 'q' to return): ")
             if user_name.lower() == 'q':
                 return None
-            elif user_name.strip():
+            elif not user_name.strip():
+                print(
+                    f"{COLOR_RED}Name field cannot be empty, "
+                    f"please enter a name.{RESET_COLOR}"
+                    )
+            elif any(user.name == user_name for user in saved_users):
+                print(
+                    f"{COLOR_RED}This username already exists. "
+                    f"Please choose a different name.{RESET_COLOR}"
+                    )
+            else:
                 new_user = User(user_name)
                 return new_user
-            else:
-                print(f"{COLOR_RED}Name field cannot be empty, please enter a name.{RESET_COLOR}")
     else:
         return None
 
@@ -99,14 +126,17 @@ def generate_income_info(income_data):
         amount = int(details['amount'])
         occurrence = details['occurrence']
         if income_type == "Total Expenses":
-            color = COLOR_RED
+            color = COLOR_RED if amount != 0 else COLOR_BLUE
         elif amount > 0:
             color = COLOR_GREEN
         elif amount == 0:
             color = COLOR_BLUE
         else:
             color = COLOR_RED
-        income_info += f"{income_type}: {color}${amount}{RESET_COLOR} ({occurrence})\n "
+        income_info += (
+            f"{income_type}: {color}${amount}{RESET_COLOR} "
+            f"({occurrence})\n "
+            )
     return income_info
 
 
@@ -119,18 +149,24 @@ def generate_expense_info(category_data):
             color = COLOR_BLUE
         else:
             color = COLOR_RED
-        expense_info += f"{expense_type}: {color}${amount}{RESET_COLOR} ({occurrence})\n     "
+        expense_info += (
+            f"{expense_type}: {color}${amount}{RESET_COLOR} "
+            f"({occurrence})\n     "
+        )
     return expense_info.rstrip()
 
 
 def add_income(user, income_type):
-    occurrence = display_menu(occurrence_options, "How often do you receive this income source?")
+    occurrence = display_menu(
+        occurrence_options,
+        "How often do you receive this income source?")
 
     if occurrence_options[occurrence] == "Previous Section":
         return
-    
+
     while True:
-        income_value_input = input("Enter the value of the income (press q to return): ")
+        income_value_input = input(
+            "Enter the value of the income (press q to return): ")
         if income_value_input.lower() == 'q':
             return
         try:
@@ -142,13 +178,16 @@ def add_income(user, income_type):
 
             if income_type == 'primary':
                 user.primary_income = income_info
-            else: 
+            else:
                 user.supplementary_income = income_info
             save_user_data(users_data, user, filename)
             break
         except ValueError:
-            print(f"{COLOR_RED}Invalid input, please use only numbers.{RESET_COLOR}")
-    
+            print(
+                f"{COLOR_RED}Invalid input,"
+                f"please use only numbers.{RESET_COLOR}"
+                )
+
 
 def add_expenses(user, expense_category):
     while True:
@@ -162,18 +201,24 @@ def add_expenses(user, expense_category):
             case "other":
                 options = other_expense_options
 
-        option = display_menu(options, f"{COLOR_YELLOW}Select an expense:{RESET_COLOR}")        
+        option = display_menu(
+            options,
+            f"{COLOR_YELLOW}Select an expense:{RESET_COLOR}")
         if option == len(options) - 1:
             break
-        
+
         expense_name = options[option]
 
-        occurrence = display_menu(occurrence_options, "How frequent is this expense?")
+        occurrence = display_menu(
+            occurrence_options,
+            "How frequent is this expense?")
         if occurrence_options[occurrence] == "Previous Section":
             return
-        
+
         while True:
-            expense_value_input = input("Enter the value of the expense (press 'q' to return): ")
+            expense_value_input = input(
+                "Enter the value of the expense (press 'q' to return): "
+                )
             if expense_value_input.lower() == 'q':
                 return
             try:
@@ -185,8 +230,11 @@ def add_expenses(user, expense_category):
                 save_user_data(users_data, user, filename)
                 break
             except ValueError:
-                print(f"{COLOR_RED}Invalid input, please use only numbers.{RESET_COLOR}")
-            
+                print(
+                    f"{COLOR_RED}Invalid input,"
+                    f"please use only numbers.{RESET_COLOR}"
+                    )
+
 
 def calculate_finance(user, time_frame):
     conversion = {
@@ -199,31 +247,49 @@ def calculate_finance(user, time_frame):
 
     for income in [user.primary_income, user.supplementary_income]:
         if income['amount'] > 0:
-            total_income += income['amount'] * conversion[time_frame][income['occurrence']]
-    
+            income_calc = conversion[time_frame][income['occurrence']]
+            income_contribution = income['amount'] * income_calc
+            total_income += income_contribution
+
     for category, expenses in user.expense.items():
         for expense in expenses.values():
             if expense['amount'] > 0:
-                total_expense += expense['amount'] * conversion[time_frame][expense['occurrence']]
-    
+                expense_calc = conversion[time_frame][expense['occurrence']]
+                expense_contribution = expense['amount'] * expense_calc
+                total_expense += expense_contribution
     remaining_funds = total_income - total_expense
 
-    user.total_income = {"amount": total_income, "occurrence": time_frame}
-    user.total_expense = {"amount": total_expense, "occurrence": time_frame}
-    user.remaining_funds = {"amount": remaining_funds, "occurrence": time_frame}
+    user.total_income = {
+        "amount": total_income,
+        "occurrence": time_frame}
+    user.total_expense = {
+        "amount": total_expense,
+        "occurrence": time_frame
+        }
+    user.remaining_funds = {
+        "amount": remaining_funds,
+        "occurrence": time_frame
+        }
 
     return total_income, total_expense, remaining_funds
-    
+
 
 def delete_user(current_user, saved_users, users_data, filename):
     user_names = [user.name for user in saved_users] + ["Main Menu"]
-    selected_option = display_menu(user_names, f"{COLOR_YELLOW}Select a user to delete{RESET_COLOR}")
-    
+    selected_option = display_menu(
+        user_names,
+        f"{COLOR_YELLOW}Select a user to delete{RESET_COLOR}"
+        )
+
     if selected_option == len(saved_users):
         return current_user
     user_to_delete = saved_users[selected_option]
 
-    confirmation = display_menu(basic_options, f"{COLOR_RED}Deleting {user_to_delete.name} will remove all of their stored data. Are you sure you want to continue?{RESET_COLOR}")
+    confirmation = display_menu(
+        basic_options,
+        f"{COLOR_RED}Deleting {user_to_delete.name} will remove all of"
+        f"their stored data. Are you sure you want to continue?{RESET_COLOR}"
+        )
     if confirmation == 0:
         saved_users.pop(selected_option)
         users_data.pop(user_to_delete.name)
@@ -237,14 +303,18 @@ def delete_user(current_user, saved_users, users_data, filename):
         else:
             if not saved_users:
                 user_name = input("Please enter a name: ")
-                new_user = User(user_name)
-                saved_users.append(new_user)
-                users_data[user_name] = new_user.to_dict()
-                save_users(users_data, filename)
-                return new_user
+                if not user_name.strip():
+                    print(f"{COLOR_RED}Name field cannot be empty,"
+                          f"please enter a name.{RESET_COLOR}"
+                          )
+                else:
+                    new_user = User(user_name)
+                    saved_users.append(new_user)
+                    users_data[user_name] = new_user.to_dict()
+                    save_users(users_data, filename)
+                    return new_user
             else:
                 selected_user_index = user_selection_menu(saved_users)
                 return saved_users[selected_user_index]
     else:
         return current_user
-    

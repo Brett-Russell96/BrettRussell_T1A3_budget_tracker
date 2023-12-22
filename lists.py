@@ -82,6 +82,3 @@ basic_options = [
     "Yes",
     "No"
 ]
-
-
-

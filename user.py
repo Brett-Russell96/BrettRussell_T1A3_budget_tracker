@@ -36,10 +36,3 @@ class User:
 
     def to_dict(self):
         return vars(self)
-
-
-
-
-
-
-
