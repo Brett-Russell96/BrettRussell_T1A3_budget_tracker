@@ -29,7 +29,11 @@ def display_menu(options, title="menu"):
             prefix = "-> " if i == current_selection else "   "
             print(f"{prefix}{option}")
 
-        key = readchar.readkey()
+        try:
+            key = readchar.readkey()
+        except Exception as e:
+            print(f"{COLOR_RED}Error reading key input: {e}{RESET_COLOR}")
+            continue
 
         if key == readchar.key.UP and current_selection > 0:
             current_selection -= 1
@@ -116,8 +120,24 @@ def new_user_creation():
 
 def save_user_data(users_data, user, filename):
     users_data[user.name] = user.to_dict()
-    with open(filename, 'w') as file:
-        json.dump(users_data, file, indent=4)
+    try:
+        with open(filename, 'w') as file:
+            json.dump(users_data, file, indent=4)
+    except IOError as e:
+        print(
+            f"{COLOR_RED}Failed to save user data: "
+            f"{e}{RESET_COLOR}"
+        )
+    except json.JSONDecodeError as e:
+        print(
+            f"{COLOR_RED}Failed to format user data as JSON: "
+            f"{e}{RESET_COLOR}"
+        )
+    except Exception as e:
+        print(
+            f"{COLOR_RED}An unexpected error occurred: "
+            f"{e}{RESET_COLOR}"
+        )
 
 
 def generate_income_info(income_data):
@@ -237,41 +257,78 @@ def add_expenses(user, expense_category):
 
 
 def calculate_finance(user, time_frame):
-    conversion = {
-        "Weekly": {"Weekly": 1, "Fortnightly": 0.5, "Monthly": 12 / 52},
-        "Fortnightly": {"Weekly": 2, "Fortnightly": 1, "Monthly": 12 / 26},
-        "Monthly": {"Weekly": 52 / 12, "Fortnightly": 26 / 12, "Monthly": 1}
-    }
-    total_income = 0
-    total_expense = 0
-
-    for income in [user.primary_income, user.supplementary_income]:
-        if income['amount'] > 0:
-            income_calc = conversion[time_frame][income['occurrence']]
-            income_contribution = income['amount'] * income_calc
-            total_income += income_contribution
-
-    for category, expenses in user.expense.items():
-        for expense in expenses.values():
-            if expense['amount'] > 0:
-                expense_calc = conversion[time_frame][expense['occurrence']]
-                expense_contribution = expense['amount'] * expense_calc
-                total_expense += expense_contribution
-    remaining_funds = total_income - total_expense
-
-    user.total_income = {
-        "amount": total_income,
-        "occurrence": time_frame}
-    user.total_expense = {
-        "amount": total_expense,
-        "occurrence": time_frame
+    try:
+        conversion = {
+            "Weekly": {
+                "Weekly": 1,
+                "Fortnightly": 0.5,
+                "Monthly": 12 / 52
+            },
+            "Fortnightly": {
+                "Weekly": 2,
+                "Fortnightly": 1,
+                "Monthly": 12 / 26
+            },
+            "Monthly": {
+                "Weekly": 52 / 12,
+                "Fortnightly": 26 / 12,
+                "Monthly": 1
+            }
         }
-    user.remaining_funds = {
-        "amount": remaining_funds,
-        "occurrence": time_frame
-        }
+        total_income = 0
+        total_expense = 0
 
-    return total_income, total_expense, remaining_funds
+        for income in [user.primary_income, user.supplementary_income]:
+            if income['amount'] > 0:
+                income_calc = (
+                    conversion[time_frame][income['occurrence']]
+                )
+                income_contribution = (
+                    income['amount'] * income_calc
+                )
+                total_income += income_contribution
+
+        for category, expenses in user.expense.items():
+            for expense in expenses.values():
+                if expense['amount'] > 0:
+                    expense_calc = (
+                        conversion[time_frame][expense['occurrence']]
+                    )
+                    expense_contribution = (
+                        expense['amount'] * expense_calc
+                    )
+                    total_expense += expense_contribution
+        remaining_funds = total_income - total_expense
+
+        user.total_income = {
+            "amount": total_income,
+            "occurrence": time_frame}
+        user.total_expense = {
+            "amount": total_expense,
+            "occurrence": time_frame
+            }
+        user.remaining_funds = {
+            "amount": remaining_funds,
+            "occurrence": time_frame
+            }
+
+        return total_income, total_expense, remaining_funds
+
+    except KeyError as e:
+        print(
+            f"{COLOR_RED}Invalid time frame or occurrence: "
+            f"{e}{RESET_COLOR}"
+        )
+    except TypeError as e:
+        print(
+            f"{COLOR_RED}Invalid data type in financial information: "
+            f"{e}{RESET_COLOR}"
+        )
+    except Exception as e:
+        print(
+            f"{COLOR_RED}An unexpected error occured in finance calculation: "
+            f"{e}{RESET_COLOR}"
+        )
 
 
 def delete_user(current_user, saved_users, users_data, filename):
@@ -287,34 +344,38 @@ def delete_user(current_user, saved_users, users_data, filename):
 
     confirmation = display_menu(
         basic_options,
-        f"{COLOR_RED}Deleting {user_to_delete.name} will remove all of"
+        f"{COLOR_RED}Deleting {user_to_delete.name} will remove all of "
         f"their stored data. Are you sure you want to continue?{RESET_COLOR}"
         )
     if confirmation == 0:
-        saved_users.pop(selected_option)
-        users_data.pop(user_to_delete.name)
+        try:
+            saved_users.pop(selected_option)
+            users_data.pop(user_to_delete.name)
 
-        save_users(users_data, filename)
-        print(f"User {user_to_delete.name} has been deleted.")
+            save_users(users_data, filename)
+            print(f"User {user_to_delete.name} has been deleted.")
 
-        if user_to_delete != current_user:
-            input("Press any key to return to the main menu.")
-            return current_user
-        else:
-            if not saved_users:
-                user_name = input("Please enter a name: ")
-                if not user_name.strip():
-                    print(f"{COLOR_RED}Name field cannot be empty,"
-                          f"please enter a name.{RESET_COLOR}"
-                          )
-                else:
-                    new_user = User(user_name)
-                    saved_users.append(new_user)
-                    users_data[user_name] = new_user.to_dict()
-                    save_users(users_data, filename)
-                    return new_user
+            if user_to_delete != current_user:
+                input("Press any key to return to the main menu.")
+                return current_user
             else:
-                selected_user_index = user_selection_menu(saved_users)
-                return saved_users[selected_user_index]
+                if not saved_users:
+                    user_name = input("Please enter a name: ")
+                    if not user_name.strip():
+                        print(
+                            f"{COLOR_RED}Name field cannot be empty,"
+                            f"please enter a name.{RESET_COLOR}"
+                        )
+                    else:
+                        new_user = User(user_name)
+                        saved_users.append(new_user)
+                        users_data[user_name] = new_user.to_dict()
+                        save_users(users_data, filename)
+                        return new_user
+                else:
+                    selected_user_index = user_selection_menu(saved_users)
+                    return saved_users[selected_user_index]
+        except Exception as e:
+            print(f"{COLOR_RED}Error while deleting user: {e}{RESET_COLOR}")
     else:
         return current_user
