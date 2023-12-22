@@ -78,7 +78,10 @@ def save_users(users, filename):
 def user_selection_menu(saved_users):
     user_names = [user.name for user in saved_users]
     user_menu_options = user_names + ["New User"]
-    selected_option = display_menu(user_menu_options, "Select User")
+    selected_option = display_menu(
+        user_menu_options,
+        f"{COLOR_YELLOW}Select User{RESET_COLOR}"
+    )
     return selected_option
 
 

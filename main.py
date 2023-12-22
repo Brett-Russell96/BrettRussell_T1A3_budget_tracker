@@ -12,6 +12,7 @@ from lists import add_expenses_options, calculate_average_options
 
 COLOR_YELLOW = fg('yellow')
 COLOR_RED = fg('red')
+COLOR_BLUE = fg('blue')
 RESET_COLOR = attr('reset')
 
 
@@ -31,7 +32,9 @@ for name, data in users_data.items():
 if not saved_users:
     while True:
         try:
-            user_name = input("Please enter a name: ").strip()
+            user_name = input(
+                f"{COLOR_YELLOW}Please enter a name:{RESET_COLOR} "
+            ).strip()
             if not user_name:
                 print(
                     f"{COLOR_RED}Name field cannot be empty, "
@@ -137,12 +140,14 @@ while True:
         case 0:
             while True:
                 add_income_prompt = (
-                    "Income Data: (exit menu to refresh)\n"
+                    "{yellow}Income Data:{reset} "
+                    "{blue}(exit menu to refresh){reset}\n"
                     " {income_info}\n"
                     "{yellow}Select an option:{reset}"
                 ).format(
                     income_info=user_income_info,
                     yellow=COLOR_YELLOW,
+                    blue=COLOR_BLUE,
                     reset=RESET_COLOR
                 )
 
@@ -162,9 +167,20 @@ while True:
 
         case 1:
             while True:
+                add_expenses_prompt = (
+                    "{yellow}Expense Data:{reset} "
+                    "{blue}(exit menu to refresh){reset}\n\n"
+                    " {expense_info}\n\n"
+                    "{yellow}Select an option:{reset}"
+                ).format(
+                    expense_info=user_expense_info,
+                    yellow=COLOR_YELLOW,
+                    blue=COLOR_BLUE,
+                    reset=RESET_COLOR
+                )
                 selected_sub_option = display_menu(
                     add_expenses_options,
-                    f"{COLOR_YELLOW}Select an option:{RESET_COLOR}"
+                    add_expenses_prompt
                 )
                 match selected_sub_option:
                     case 0:
@@ -182,7 +198,8 @@ while True:
             while True:
                 try:
                     calculate_average_prompt = (
-                        "Current Financial Data: (exit menu to refresh)\n\n"
+                        "{yellow}Current Financial Data:{reset} "
+                        "{blue}(exit menu to refresh){reset}\n\n"
                         " {income_info}\n"
                         "{expense_info}\n\n"
                         "{yellow}How would you like to "
@@ -191,6 +208,7 @@ while True:
                         income_info=user_income_info,
                         expense_info=user_expense_info,
                         yellow=COLOR_YELLOW,
+                        blue=COLOR_BLUE,
                         reset=RESET_COLOR
                     )
                     selected_sub_option = display_menu(
