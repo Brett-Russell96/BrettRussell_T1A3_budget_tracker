@@ -11,42 +11,72 @@ from lists import add_expenses_options, calculate_average_options
 
 
 COLOR_YELLOW = fg('yellow')
+COLOR_RED = fg('red')
 RESET_COLOR = attr('reset')
 
 
 for name, data in users_data.items():
-    user = User(name)
-    for key, value in data.items():
-        setattr(user, key, value)
-    saved_users.append(user)
+    try:
+        user = User(name)
+        for key, value in data.items():
+            setattr(user, key, value)
+        saved_users.append(user)
+    except Exception as e:
+        print(
+            f"{COLOR_RED}Error retrieving user data for "
+            f"{name}: {e}{RESET_COLOR}"
+        )
 
 
 if not saved_users:
-    user_name = input("Please enter a name: ")
-    new_user = User(user_name)
-    saved_users.append(new_user)
-    users_data[user_name] = new_user.to_dict()
-    save_users(users_data, filename)
-    current_user = new_user
-else:
     while True:
-        selected_user_index = user_selection_menu(saved_users)
-
-        if selected_user_index < len(saved_users):
-            current_user = saved_users[selected_user_index]
-            break
-        else:
-            new_user = new_user_creation()
-            if new_user:
+        try:
+            user_name = input("Please enter a name: ").strip()
+            if not user_name:
+                print(
+                    f"{COLOR_RED}Name field cannot be empty, "
+                    f"please enter a name.{RESET_COLOR}"
+                )
+            else:
+                new_user = User(user_name)
                 saved_users.append(new_user)
-                users_data[new_user.name] = new_user.to_dict()
+                users_data[user_name] = new_user.to_dict()
                 save_users(users_data, filename)
                 current_user = new_user
                 break
+        except Exception as e:
+            print(
+                f"{COLOR_RED}Error creating a new user: {e}{RESET_COLOR}"
+            )
+
+else:
+    while True:
+        try:
+            selected_user_index = user_selection_menu(saved_users)
+            if selected_user_index < len(saved_users):
+                current_user = saved_users[selected_user_index]
+                break
+            else:
+                new_user = new_user_creation()
+                if new_user:
+                    saved_users.append(new_user)
+                    users_data[new_user.name] = new_user.to_dict()
+                    save_users(users_data, filename)
+                    current_user = new_user
+                    break
+        except Exception as e:
+            print(
+                f"{COLOR_RED}Error encountered during user selection: "
+                f"{e}{RESET_COLOR}"
+            )
 
 
 while True:
-    current_user_data = users_data[current_user.name]
+    try:
+        current_user_data = users_data[current_user.name]
+    except KeyError:
+        print(f"{COLOR_RED}Error: User data not found.{RESET_COLOR}")
+        continue
 
     user_finance_info = generate_income_info({
         "Total Income": current_user_data['total_income'],
@@ -96,7 +126,11 @@ while True:
         finance_info=user_finance_info
     )
 
-    selected_option = display_menu(main_menu_options, main_prompt)
+    try:
+        selected_option = display_menu(main_menu_options, main_prompt)
+    except Exception as e:
+        print(f"{COLOR_RED}An error occured: {e}{RESET_COLOR}")
+        continue
 
     match selected_option:
 
@@ -146,39 +180,48 @@ while True:
 
         case 2:
             while True:
-                calculate_average_prompt = (
-                    "Current Financial Data: (exit menu to refresh)\n\n"
-                    " {income_info}\n"
-                    "{expense_info}\n\n"
-                    "{yellow}How would you like to calculate your finances?"
-                    "{reset}"
-                ).format(
-                    income_info=user_income_info,
-                    expense_info=user_expense_info,
-                    yellow=COLOR_YELLOW,
-                    reset=RESET_COLOR
-                )
-                selected_sub_option = display_menu(
-                    calculate_average_options,
-                    calculate_average_prompt
-                )
-                if selected_sub_option == len(calculate_average_options) - 1:
-                    break
-                else:
-                    time_frame = calculate_average_options[selected_sub_option]
-                    total_income, total_expense, remaining_funds = (
-                        calculate_finance(current_user, time_frame)
+                try:
+                    calculate_average_prompt = (
+                        "Current Financial Data: (exit menu to refresh)\n\n"
+                        " {income_info}\n"
+                        "{expense_info}\n\n"
+                        "{yellow}How would you like to "
+                        "calculate your finances?{reset}"
+                    ).format(
+                        income_info=user_income_info,
+                        expense_info=user_expense_info,
+                        yellow=COLOR_YELLOW,
+                        reset=RESET_COLOR
                     )
-                    save_user_data(users_data, current_user, filename)
-                    break
+                    selected_sub_option = display_menu(
+                        calculate_average_options,
+                        calculate_average_prompt
+                    )
+                    if selected_sub_option == 3:
+                        break
+                    else:
+                        time_frame = calculate_average_options[
+                            selected_sub_option
+                        ]
+                        total_income, total_expense, remaining_funds = (
+                            calculate_finance(current_user, time_frame)
+                        )
+                        save_user_data(users_data, current_user, filename)
+                        break
+                except Exception as e:
+                    print(f"{COLOR_RED}Calculation error: {e}{RESET_COLOR}")
+                    continue
 
         case 3:
-            new_user = new_user_creation()
-            if new_user:
-                saved_users.append(new_user)
-                users_data[new_user.name] = new_user.to_dict()
-                save_users(users_data, filename)
-                current_user = new_user
+            try:
+                new_user = new_user_creation()
+                if new_user:
+                    saved_users.append(new_user)
+                    users_data[new_user.name] = new_user.to_dict()
+                    save_users(users_data, filename)
+                    current_user = new_user
+            except Exception as e:
+                print(f"{COLOR_RED}Error creating user: {e}{RESET_COLOR}")
 
         case 4:
             selected_user_index = switch_user(saved_users)
@@ -187,12 +230,15 @@ while True:
             else:
                 continue
         case 5:
-            current_user = delete_user(
-                current_user,
-                saved_users,
-                users_data,
-                filename
-            )
+            try:
+                current_user = delete_user(
+                    current_user,
+                    saved_users,
+                    users_data,
+                    filename
+                )
+            except Exception as e:
+                print(f"{COLOR_RED}Error deleting user: {e}{RESET_COLOR}")
 
     if selected_option == len(main_menu_options) - 1:
         break
