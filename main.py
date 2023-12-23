@@ -16,6 +16,7 @@ COLOR_BLUE = fg('blue')
 RESET_COLOR = attr('reset')
 
 
+# retrieves user data when the program is run
 for name, data in users_data.items():
     try:
         user = User(name)
@@ -28,7 +29,7 @@ for name, data in users_data.items():
             f"{name}: {e}{RESET_COLOR}"
         )
 
-
+# handles creating a new user if none exists
 if not saved_users:
     while True:
         try:
@@ -53,6 +54,7 @@ if not saved_users:
             )
 
 else:
+    # handles user selection or creation if a user exists
     while True:
         try:
             selected_user_index = user_selection_menu(saved_users)
@@ -73,14 +75,14 @@ else:
                 f"{e}{RESET_COLOR}"
             )
 
-
+# main loop for program logic
 while True:
     try:
         current_user_data = users_data[current_user.name]
     except KeyError:
         print(f"{COLOR_RED}Error: User data not found.{RESET_COLOR}")
         continue
-
+    # variables for financial data displayed in program interface
     user_finance_info = generate_income_info({
         "Total Income": current_user_data['total_income'],
         "Total Expenses": current_user_data['total_expense'],
@@ -116,7 +118,7 @@ while True:
         transport=transport_expense_info,
         other=other_expense_info
     )
-
+    # prompt for main menu
     main_prompt = (
         "{yellow}Expense Tracker{reset}\n"
         " Current User: {yellow}{user}{reset}\n"
@@ -130,14 +132,16 @@ while True:
     )
 
     try:
+        # function call for main menu selection
         selected_option = display_menu(main_menu_options, main_prompt)
     except Exception as e:
         print(f"{COLOR_RED}An error occured: {e}{RESET_COLOR}")
         continue
 
     match selected_option:
-
+        # match case for all selection options
         case 0:
+            # add income section
             while True:
                 add_income_prompt = (
                     "{yellow}Income Data:{reset} "
@@ -160,6 +164,7 @@ while True:
                         'primary' if selected_sub_option == 0
                         else 'supplementary'
                     )
+                    # functions called for add income
                     add_income(current_user, income_type)
                     save_user_data(users_data, current_user, filename)
                 else:
@@ -167,6 +172,7 @@ while True:
 
         case 1:
             while True:
+                # add expenses section
                 add_expenses_prompt = (
                     "{yellow}Expense Data:{reset} "
                     "{blue}(exit menu to refresh){reset}\n\n"
@@ -182,6 +188,7 @@ while True:
                     add_expenses_options,
                     add_expenses_prompt
                 )
+                # match case to handle function call based on category
                 match selected_sub_option:
                     case 0:
                         add_expenses(current_user, "home")
@@ -196,8 +203,9 @@ while True:
 
         case 2:
             while True:
+                # calculate finances section
                 try:
-                    calculate_average_prompt = (
+                    calculate_finance_prompt = (
                         "{yellow}Current Financial Data:{reset} "
                         "{blue}(exit menu to refresh){reset}\n\n"
                         " {income_info}\n"
@@ -213,14 +221,16 @@ while True:
                     )
                     selected_sub_option = display_menu(
                         calculate_average_options,
-                        calculate_average_prompt
+                        calculate_finance_prompt
                     )
                     if selected_sub_option == 3:
                         break
                     else:
+                        # timeframe variable for conversion calculation
                         time_frame = calculate_average_options[
                             selected_sub_option
                         ]
+                        # function call for finance calculation
                         total_income, total_expense, remaining_funds = (
                             calculate_finance(current_user, time_frame)
                         )
@@ -232,6 +242,7 @@ while True:
 
         case 3:
             try:
+                # new user section
                 new_user = new_user_creation()
                 if new_user:
                     saved_users.append(new_user)
@@ -242,12 +253,14 @@ while True:
                 print(f"{COLOR_RED}Error creating user: {e}{RESET_COLOR}")
 
         case 4:
+            # switch user section
             selected_user_index = switch_user(saved_users)
             if selected_user_index < len(saved_users):
                 current_user = saved_users[selected_user_index]
             else:
                 continue
         case 5:
+            # delete user section
             try:
                 current_user = delete_user(
                     current_user,
