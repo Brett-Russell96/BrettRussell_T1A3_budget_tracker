@@ -2,8 +2,8 @@ from colored import fg, attr
 
 from functions import display_menu, save_users, switch_user
 from functions import user_selection_menu, new_user_creation, save_user_data
-from functions import add_income, add_expenses, generate_expense_info
-from functions import generate_income_info, calculate_finance, delete_user
+from functions import add_income, add_expenses, generate_income_info
+from functions import generate_expense_info, calculate_finance, delete_user
 from functions import saved_users, users_data, filename
 from user import User
 from lists import main_menu_options, add_income_options

@@ -154,7 +154,7 @@ def save_user_data(users_data, user, filename):
         )
 
 
-# sets the display parameters for income data in the terminal
+# sets the interface display parameters for income data
 def generate_income_info(income_data):
     income_info = ""
     for income_type, details in income_data.items():
@@ -175,6 +175,7 @@ def generate_income_info(income_data):
     return income_info
 
 
+# sets the interface display parameters for expense data
 def generate_expense_info(category_data):
     expense_info = ""
     for expense_type, details in category_data.items():
