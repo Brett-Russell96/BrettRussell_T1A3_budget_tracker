@@ -259,6 +259,7 @@ while True:
                 current_user = saved_users[selected_user_index]
             else:
                 continue
+
         case 5:
             # delete user section
             try:

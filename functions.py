@@ -109,7 +109,10 @@ def new_user_creation():
     if create_new_user == 0:
         while True:
             # takes input for username
-            user_name = input("Please enter a name (press 'q' to return): ")
+            user_name = input(
+                f"{COLOR_YELLOW}Please enter a name{RESET_COLOR} "
+                f"{COLOR_BLUE}(press 'q' to return):{RESET_COLOR} "
+            )
             if user_name.lower() == 'q':
                 return None
             # checks to ensure user input isnt empty or a duplicate
@@ -131,7 +134,7 @@ def new_user_creation():
         return None
 
 
-# saves new data into user dictionary
+# saves new data and converts into user JSON dictionary
 def save_user_data(users_data, user, filename):
     users_data[user.name] = user.to_dict()
     try:
@@ -196,7 +199,8 @@ def generate_expense_info(category_data):
 def add_income(user, income_type):
     occurrence = display_menu(
         occurrence_options,
-        "How often do you receive this income source?")
+        f"{COLOR_YELLOW}How often do you receive this income source?"
+        f"{RESET_COLOR}")
 
     if occurrence_options[occurrence] == "Previous Section":
         return
@@ -204,7 +208,9 @@ def add_income(user, income_type):
     while True:
         # takes numerical input and converts to float data
         income_value_input = input(
-            "Enter the value of the income (press q to return): ")
+            f"{COLOR_YELLOW}Enter the value of the income{RESET_COLOR} "
+            f"{COLOR_BLUE}(press q to return):{RESET_COLOR} "
+        )
         if income_value_input.lower() == 'q':
             return
         try:
@@ -250,13 +256,14 @@ def add_expenses(user, expense_category):
         # sets occurrence value for later calculation
         occurrence = display_menu(
             occurrence_options,
-            "How frequent is this expense?")
+            f"{COLOR_YELLOW}How frequent is this expense?{RESET_COLOR}")
         if occurrence_options[occurrence] == "Previous Section":
             return
         # takes input for expense data
         while True:
             expense_value_input = input(
-                "Enter the value of the expense (press 'q' to return): "
+                f"{COLOR_YELLOW}Enter the value of the expense{RESET_COLOR} "
+                f"{COLOR_BLUE}(press 'q' to return):{RESET_COLOR} "
                 )
             if expense_value_input.lower() == 'q':
                 return
