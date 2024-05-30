@@ -7,13 +7,6 @@
 
 Thankyou for taking the time to look at the terminal application submission for T1A3, my Expense Tracker.
 
-### Source control repository
-
-https://github.com/Brett-Russell96/BrettRussell_T1A3_expense_tracker
-
-### Link to presentation
-
-https://youtu.be/OcagWTqco78
 
 ### Styling guidellines
 
